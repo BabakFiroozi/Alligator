@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuadrupedAlign : MonoBehaviour {
+public class QuadrupedAligner : MonoBehaviour {
 
 	Transform _tr;
 	Rigidbody _rigidBody;
 	CapsuleCollider _bodyCollider;
-
-	/// <summary>
-	/// Use 2 raycasts, one for back and another for front
-	/// </summary>
-	RaycastHit[] _groundHitInfos = new RaycastHit[2];
+	RaycastHit[] _groundHitInfos = new RaycastHit[2]; // Two raycasts, one for back and another for front
 
 
 	// Use this for initialization
@@ -34,7 +30,7 @@ public class QuadrupedAlign : MonoBehaviour {
 
 		bool invalidGround = false;
 
-		//Cats 2 rays, back to down, front to down, then calculates average slope normal
+		//Casts 2 rays, back and front both directed to down, then calculates average slope normal
 		for(int c = 0; c < 2; ++c)
 		{
 			float vecSign = c == 0 ? -1 : 1;
@@ -50,8 +46,13 @@ public class QuadrupedAlign : MonoBehaviour {
 		}
 
 		Vector3 upVec = Vector3.up;
+
 		if(!invalidGround)
-			upVec = _groundHitInfos [0].normal + _groundHitInfos [1].normal;
+		{
+			// average slope normal
+			upVec = _groundHitInfos [0].normal + _groundHitInfos [1].normal; 
+			upVec.Normalize ();
+		}
 
 		_rigidBody.rotation = Quaternion.LookRotation (_tr.forward, upVec);
 	}

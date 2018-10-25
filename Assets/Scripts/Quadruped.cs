@@ -1,28 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class QuadrupedWander : MonoBehaviour
+public class Quadruped : MonoBehaviour
 {
-	WanderState _currentState;
+	const float Move_Force = 20;
 
 	[SerializeField] Animator _animator = null;
 	[SerializeField] float _maxSpeed = .1f;
-
 	[SerializeField] float _walkAnimSpeedTweaker = 5;
 
-	const float Move_Force = 20;
-
 	float _needForce;
-
 	Transform _tr;
 	Rigidbody _rigidbody;
+	QuadrupedState _currentState;
+
 
 	public Animator Animator{ get { return _animator; } }
 	public Rigidbody Rigidbody{ get { return _rigidbody; } }
 	public float MaxSpeed{ get { return _maxSpeed; } }
 	public float WalkAnimSpeedTweaker{ get { return _walkAnimSpeedTweaker; } }
 	public float NeedForce{ get { return _needForce; } }
-	public Transform Tr{ get { return _tr; } }
+	public Transform Trans{ get { return _tr; } }
 
 
 	// Use this for initialization
@@ -30,10 +28,9 @@ public class QuadrupedWander : MonoBehaviour
 	{
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
-
 		_needForce = Move_Force * (_maxSpeed * 10);
 
-		CurrentState = new WanderState_Move (this);
+		CurrentState = new QuadrupedState_Wander (this);
 	}
 
 	void FixedUpdate()
@@ -47,13 +44,14 @@ public class QuadrupedWander : MonoBehaviour
 		_currentState.OnStateRun ();
 	}
 
-
-	public WanderState CurrentState
+	public QuadrupedState CurrentState
 	{
 		get	{ return _currentState; }
 		set
 		{
 			var state = value;
+			if (state == _currentState)
+				return;
 			if (_currentState != null)
 				_currentState.OnStateExit ();
 			_currentState = state;

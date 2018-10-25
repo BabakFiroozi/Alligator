@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class WanderState
+public abstract class QuadrupedState
 {
-	protected QuadrupedWander _quadruped;
+	protected Quadruped _quadruped;
 
-	public WanderState(QuadrupedWander qaudruped)
+	public QuadrupedState(Quadruped qaudruped)
 	{
 		_quadruped = qaudruped;
 	}
@@ -22,11 +22,11 @@ public abstract class WanderState
 }
 
 /// <summary>
-/// Idle state implementation for wander
+/// Idle state implementation for quadruped
 /// </summary>
-public class WanderState_Idle : WanderState
+public class QuadrupedState_Idle : QuadrupedState
 {
-	public WanderState_Idle(QuadrupedWander quadruped) : base(quadruped)
+	public QuadrupedState_Idle(Quadruped quadruped) : base(quadruped)
 	{
 	}
 
@@ -41,6 +41,7 @@ public class WanderState_Idle : WanderState
 	public override void OnStateEnter ()
 	{
 		base.OnStateEnter ();
+		_quadruped.Rigidbody.velocity = Vector3.zero;
 		_quadruped.Animator.SetTrigger ("idle");
 	}
 
@@ -51,11 +52,11 @@ public class WanderState_Idle : WanderState
 }
 
 /// <summary>
-/// Move state implementation for wander
+/// Move state implementation for quadruped
 /// </summary>
-public class WanderState_Move : WanderState
+public class QuadrupedState_Wander : QuadrupedState
 {
-	public WanderState_Move(QuadrupedWander quadruped) : base(quadruped)
+	public QuadrupedState_Wander(Quadruped quadruped) : base(quadruped)
 	{
 	}
 
@@ -67,7 +68,7 @@ public class WanderState_Move : WanderState
 
 	public override void OnStateRunFixed ()
 	{
-		Vector3 moveDir = _quadruped.Tr.forward;
+		Vector3 moveDir = _quadruped.Trans.forward;
 		var _rigidbody = _quadruped.Rigidbody;
 		float _maxSpeed = _quadruped.MaxSpeed;
 
