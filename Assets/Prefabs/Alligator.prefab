@@ -1023,6 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1525ba41c1d14b80746cde05696fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TerritoryArea: {fileID: 0}
   _animator: {fileID: 95333627954685866}
   _maxSpeed: 0.3
   _walkAnimSpeedTweaker: 5
@@ -1037,6 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb60cc285b38874caab787c34f51ef0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layerMaskChecks: []
 --- !u!136 &136330945275381944
 CapsuleCollider:
   m_ObjectHideFlags: 1

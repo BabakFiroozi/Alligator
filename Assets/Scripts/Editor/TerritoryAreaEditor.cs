@@ -168,11 +168,13 @@ public class TerritoryAreaEditor : Editor {
 			if (!spawnedObj)
 				continue;
 			Vector3 objPos = spawnedObj.transform.position;
-			RaycastHit[] hitResults = new RaycastHit[10];
+			RaycastHit[] hitResults = new RaycastHit[3];
 			Physics.RaycastNonAlloc(objPos + new Vector3(0, 10, 0), new Vector3(0, -10, 0), hitResults);
 			Vector3 hitNormalVec = spawnedObj.transform.up;
 			foreach (var result in hitResults)
 			{
+				if (result.collider == null)
+					continue;
 				if (result.collider.gameObject == spawnedObj)
 					continue;
 				objPos.y = result.point.y + spawnedObj.GetComponent<Collider>().bounds.extents.x;

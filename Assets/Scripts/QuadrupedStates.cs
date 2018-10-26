@@ -68,9 +68,9 @@ public class QuadrupedState_Wander : QuadrupedState
 
 	public override void OnStateRunFixed ()
 	{
-		Vector3 moveDir = _quadruped.Trans.forward;
 		var _rigidbody = _quadruped.Rigidbody;
 		float _maxSpeed = _quadruped.MaxSpeed;
+		Vector3 moveDir = _rigidbody.rotation * Vector3.forward;
 
 		Vector3 vel = _rigidbody.velocity;
 		_rigidbody.velocity = Vector3.zero;

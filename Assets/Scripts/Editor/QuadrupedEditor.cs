@@ -20,8 +20,8 @@ public class QuadrupedEditor : Editor {
 		GUILayout.Space (10);
 		if( GUILayout.Button("Select Territory Area"))
 		{
-			var obj = GameObject.Find (_quadruped.gameObject.name + "_TerritoryArea");
-			Selection.activeObject = obj;
+			if (_quadruped.TerritoryArea != null)
+				Selection.activeObject = _quadruped.TerritoryArea.gameObject;
 		}
 
 		base.OnInspectorGUI();
@@ -32,6 +32,9 @@ public class QuadrupedEditor : Editor {
 		Handles.zTest = UnityEngine.Rendering.CompareFunction.Less;
 
 		var handleColor = Handles.color;
+
+		if (_quadruped.TerritoryArea == null)
+			return;
 
         var areaNodes = _quadruped.TerritoryArea.Nodes;
 
