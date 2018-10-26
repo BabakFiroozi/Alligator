@@ -7,17 +7,24 @@ using System.Collections.Generic;
 public class QuadrupedEditor : Editor {
 
 	const float Border_Draw_Height = 4;
-    Quadruped _territoryArea;
+	Quadruped _quadruped;
 
 
     void Awake()
 	{
-        _territoryArea = target as Quadruped;
+        _quadruped = target as Quadruped;
 	}
 
 	public override void OnInspectorGUI()
 	{
-        base.OnInspectorGUI();
+		GUILayout.Space (10);
+		if( GUILayout.Button("Edit Territory Area"))
+		{
+			var obj = GameObject.Find (_quadruped.gameObject.name + "_TerritoryArea");
+			Selection.activeObject = obj;
+		}
+
+		base.OnInspectorGUI();
 	}
 
 	protected virtual void OnSceneGUI()
@@ -26,7 +33,7 @@ public class QuadrupedEditor : Editor {
 
 		var handleColor = Handles.color;
 
-        var areaNodes = _territoryArea.TerritoryArea.Nodes;
+        var areaNodes = _quadruped.TerritoryArea.Nodes;
 
 		Handles.color = Color.green;
         for (int i = 0; i < areaNodes.Count; ++i)
