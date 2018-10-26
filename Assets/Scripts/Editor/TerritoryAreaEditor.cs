@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [CanEditMultipleObjects]
 public class TerritoryAreaEditor : Editor {
 
-	const float Border_Draw_Height = 4;
+	public const float Border_Draw_Height = 4;
 	const int Init_Nodes_Count = 4;
 
 	[MenuItem("Game Tools/Create Territory Area")]
