@@ -296,6 +296,9 @@ public class TerritoryAreaEditor : Editor {
 
 		_areaLastPosition = _territoryArea.transform.position;
 
+		_territoryArea.transform.rotation = Quaternion.identity;
+		_territoryArea.transform.localScale = Vector3.one;
+
 		Tools.hidden = _selectedNode != -1;
 	}
 
