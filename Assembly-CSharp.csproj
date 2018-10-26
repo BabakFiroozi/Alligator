@@ -54,11 +54,11 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\ExtendedFlycam.cs" />
+     <Compile Include="Assets\Scripts\GroundAligner.cs" />
      <Compile Include="Assets\Scripts\LayerMaskUtil.cs" />
      <Compile Include="Assets\Scripts\Quadruped.cs" />
-     <Compile Include="Assets\Scripts\QuadrupedAligner.cs" />
      <Compile Include="Assets\Scripts\QuadrupedStates.cs" />
-     <Compile Include="Assets\Scripts\SpawnArea.cs" />
+     <Compile Include="Assets\Scripts\TerritoryArea.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>H:/AlligatorWandering/AlligatorWandering/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
