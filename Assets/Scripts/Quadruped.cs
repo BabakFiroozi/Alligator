@@ -6,6 +6,7 @@ public class Quadruped : MonoBehaviour
 {
 	const float Move_Force = 20;
 
+    [HideInInspector]
     public TerritoryArea TerritoryArea;
 
     [SerializeField] Animator _animator = null;
@@ -60,26 +61,5 @@ public class Quadruped : MonoBehaviour
 			_currentState = state;
 			_currentState.OnStateEnter ();
 		}
-	}
-
-	void OnDrawGizmos()
-	{
-        const float Border_Draw_Height = 4;
-
-        if (TerritoryArea != null)
-		{
-            var areaNodes = TerritoryArea.Nodes;
-            
-
-            var gizmoColor = Gizmos.color;
-            Gizmos.color = Color.yellow;
-            for (int i = 0; i < areaNodes.Count; ++i)
-            {
-                var node1 = areaNodes[i];
-                var node2 = areaNodes[(i + 1) % areaNodes.Count];
-                Gizmos.DrawLine(node1.position, node2.position);
-            }
-            Gizmos.color = gizmoColor;
-        }
 	}
 }

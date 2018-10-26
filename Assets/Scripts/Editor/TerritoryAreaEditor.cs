@@ -10,7 +10,6 @@ public class TerritoryAreaEditor : Editor {
 	const float Border_Draw_Height = 4;
 	const int Init_Nodes_Count = 4;
 
-
 	[MenuItem("Game Tools/Create Territory Area")]
 	public static void CreateTerritoryArea()
 	{
@@ -136,10 +135,12 @@ public class TerritoryAreaEditor : Editor {
 					spawnRot = Quaternion.identity;
 				}
 
-				var spawnObj = GameObject.Instantiate (_territoryArea.SpawnPrefab, spawnPos, spawnRot);
+				var spawnObj = PrefabUtility.InstantiatePrefab (_territoryArea.SpawnPrefab) as GameObject;
 				spawnObj.name = _territoryArea.SpawnPrefab.name;
+				spawnObj.transform.position = spawnPos;
 				spawnObj.transform.rotation = Quaternion.LookRotation (spawnObj.transform.forward, spawnUpVec);
 				spawnObj.GetComponent<Quadruped> ().TerritoryArea = _territoryArea;
+				spawnObj.transform.SetSiblingIndex (_territoryArea.transform.GetSiblingIndex () + 1);
 
 				_territoryArea.SpawnedObjects.Add (spawnObj);
 			}
@@ -154,15 +155,15 @@ public class TerritoryAreaEditor : Editor {
 	[DrawGizmo(GizmoType.Selected | GizmoType.Active)]
 	static void DrawGizmo(TerritoryArea area, GizmoType gizmoType)
 	{
-		var gizmoColor = Gizmos.color;
-		Gizmos.color = Color.yellow;
-		for (int i = 0; i < area.Nodes.Count; ++i)
-		{
-			var node1 = area.Nodes [i];
-			var node2 = area.Nodes [(i + 1) % area.Nodes.Count];
-			Gizmos.DrawLine (node1.position, node2.position);
-		}
-		Gizmos.color = gizmoColor;
+//		var gizmoColor = Gizmos.color;
+//		Gizmos.color = Color.yellow;
+//		for (int i = 0; i < area.Nodes.Count; ++i)
+//		{
+//			var node1 = area.Nodes [i];
+//			var node2 = area.Nodes [(i + 1) % area.Nodes.Count];
+//			Gizmos.DrawLine (node1.position, node2.position);
+//		}
+//		Gizmos.color = gizmoColor;
 	}
 
 	protected virtual void OnSceneGUI()
@@ -206,17 +207,24 @@ public class TerritoryAreaEditor : Editor {
 
 		_guiStyle.alignment = TextAnchor.MiddleCenter;
 		_guiStyle.normal.textColor = Color.black;
-		_guiStyle.fontSize = 12;
-		string spawnName = _territoryArea.SpawnPrefab == null ? "Set spawn prefab for" : _territoryArea.SpawnPrefab.name;
-		string territoryName = string.Format ("{0}\n{1}", spawnName, _territoryArea.gameObject.name);
-		Handles.Label (_territoryArea.transform.position, territoryName, _guiStyle);
+		_guiStyle.fontSize = 10;
+		if (_territoryArea.SpawnPrefab != null)
+		{
+			string objName = _territoryArea.SpawnPrefab.name + "_TerritoryArea";
+			_territoryArea.gameObject.name = objName;
+			Handles.Label (_territoryArea.transform.position, objName, _guiStyle);
+		}
+		else
+		{
+			Handles.Label (_territoryArea.transform.position, "Set spawn prefab", _guiStyle);
+		}
 
 		for(int i = 0; i < areaNodes.Count; ++i)
 		{
 			var node = areaNodes[i];
 
 			Handles.color = Color.yellow;
-			if(Handles.Button (node.position, Quaternion.identity, .25f, .25f, Handles.SphereHandleCap))
+			if(Handles.Button (node.position, Quaternion.identity, .2f, .2f, Handles.SphereHandleCap))
 			{
 				_selectedNode = i;
 				break;
@@ -245,6 +253,14 @@ public class TerritoryAreaEditor : Editor {
 			Handles.DrawSolidRectangleWithOutline (vertsArr, new Color (0, 1, .5f, .1f), new Color (.5f, 1, 1, .5f));
 		}
 
+		Handles.color = Color.yellow;
+		for (int i = 0; i < areaNodes.Count; ++i)
+		{
+			var node1 = areaNodes [i];
+			var node2 = areaNodes [(i + 1) % areaNodes.Count];
+			Handles.DrawLine (node1.position, node2.position);
+		}
+
 		if(_selectedNode != -1)
 		{
 			var node = areaNodes [_selectedNode];
@@ -253,6 +269,19 @@ public class TerritoryAreaEditor : Editor {
 			handlePos.y = nodePosY;
 			node.position = handlePos;
 		}
+
+		Handles.BeginGUI ();
+		if (_territoryArea.SpawnPrefab == null)
+		{
+			GUI.color = Color.yellow;
+			GUILayout.Label ("Set spawn prefab", GUILayout.Width (200), GUILayout.Height (30));
+		}
+		if (_selectedNode != -1)
+		{
+			GUI.color = Color.black;
+			GUILayout.Label ("Esc to exit edit mode", GUILayout.Width (200), GUILayout.Height (30));
+		}
+		Handles.EndGUI ();
 
 		Handles.color = handleColor;
 

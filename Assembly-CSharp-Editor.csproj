@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Editor\QuadrupedEditor.cs" />
      <Compile Include="Assets\Scripts\Editor\TerritoryAreaEditor.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>H:/AlligatorWandering/AlligatorWandering/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

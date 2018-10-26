@@ -14,6 +14,7 @@ public class TerritoryArea : MonoBehaviour, ISerializationCallbackReceiver {
 	public List<TerritoryAreaNode> Nodes = new List<TerritoryAreaNode>();
 
 	[Range(1, 10)]
+	[HideInInspector]
 	public int SpawnsCount = 1;
 
 	public void OnAreaChanged() 

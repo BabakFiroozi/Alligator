@@ -28,17 +28,11 @@ public class QuadrupedEditor : Editor {
 
         var areaNodes = _territoryArea.TerritoryArea.Nodes;
 
+		Handles.color = Color.green;
         for (int i = 0; i < areaNodes.Count; ++i)
 		{
 			var node = areaNodes[i];
-
-			Handles.color = Color.yellow;
-
 			var nextNode = areaNodes[(i + 1) % areaNodes.Count];
-			Vector3 toNextNodeDir = nextNode.position - node.position;
-			Vector3 addNodeHandlePos = node.position + toNextNodeDir * .5f;
-			Handles.color = Color.green;
-
 			Vector3[] vertsArr = new Vector3[4];
 			vertsArr [0] = node.position - new Vector3 (0, Border_Draw_Height, 0);
 			vertsArr [1] = nextNode.position - new Vector3 (0, Border_Draw_Height, 0);
