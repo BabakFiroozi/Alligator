@@ -18,7 +18,7 @@ public class QuadrupedEditor : Editor {
 	public override void OnInspectorGUI()
 	{
 		GUILayout.Space (10);
-		if( GUILayout.Button("Edit Territory Area"))
+		if( GUILayout.Button("Select Territory Area"))
 		{
 			var obj = GameObject.Find (_quadruped.gameObject.name + "_TerritoryArea");
 			Selection.activeObject = obj;

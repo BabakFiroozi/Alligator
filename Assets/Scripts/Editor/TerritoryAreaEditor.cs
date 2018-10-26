@@ -54,6 +54,8 @@ public class TerritoryAreaEditor : Editor {
 			if (!spawnedObj)
 				_territoryArea.SpawnedObjects.Remove (spawnedObj);
 		}
+
+		UpdateSpawnObjectsPos (Vector3.zero);
 	}
 
 	void OnDisable()
@@ -62,7 +64,6 @@ public class TerritoryAreaEditor : Editor {
 	}
 	void OnDestroy()
 	{
-		Debug.Log ("babakkk");
 	}
 
 	void SetFirstNodes()
@@ -126,23 +127,16 @@ public class TerritoryAreaEditor : Editor {
 			{
 				Vector3 spawnPos = _territoryArea.transform.position;
 				Vector3 spawnUpVec = Vector3.up;
-				Quaternion spawnRot = Quaternion.identity;
-				RaycastHit hitInfo;
-				if(Physics.Raycast(spawnPos, new Vector3(0, 1, 0), out hitInfo, 10))
-				{
-					spawnPos = hitInfo.point + new Vector3(0, .2f, 0);
-					spawnUpVec = hitInfo.normal;
-					spawnRot = Quaternion.identity;
-				}
-
 				var spawnObj = PrefabUtility.InstantiatePrefab (_territoryArea.SpawnPrefab) as GameObject;
 				spawnObj.name = _territoryArea.SpawnPrefab.name;
 				spawnObj.transform.position = spawnPos;
-				spawnObj.transform.rotation = Quaternion.LookRotation (spawnObj.transform.forward, spawnUpVec);
-				spawnObj.GetComponent<Quadruped> ().TerritoryArea = _territoryArea;
-				spawnObj.transform.SetSiblingIndex (_territoryArea.transform.GetSiblingIndex () + 1);
+				spawnObj.transform.rotation = Quaternion.Euler (0, UnityEngine.Random.Range (0, 360), 0);
 
+				spawnObj.GetComponent<Quadruped> ().TerritoryArea = _territoryArea;
+				spawnObj.transform.SetSiblingIndex (_territoryArea.transform.GetSiblingIndex ());
 				_territoryArea.SpawnedObjects.Add (spawnObj);
+
+				UpdateSpawnObjectsPos (Vector3.zero);
 			}
 		}
 		GUILayout.EndVertical ();
@@ -166,40 +160,49 @@ public class TerritoryAreaEditor : Editor {
 //		Gizmos.color = gizmoColor;
 	}
 
+	void UpdateSpawnObjectsPos(Vector3 posOffset)
+	{
+		for (int i = 0; i < _territoryArea.SpawnedObjects.Count; ++i)
+		{
+			var spawnedObj = _territoryArea.SpawnedObjects[i];
+			if (!spawnedObj)
+				continue;
+			Vector3 objPos = spawnedObj.transform.position;
+			RaycastHit[] hitResults = new RaycastHit[10];
+			Physics.RaycastNonAlloc(objPos + new Vector3(0, 10, 0), new Vector3(0, -10, 0), hitResults);
+			Vector3 hitNormalVec = spawnedObj.transform.up;
+			foreach (var result in hitResults)
+			{
+				if (result.collider.gameObject == spawnedObj)
+					continue;
+				objPos.y = result.point.y + spawnedObj.GetComponent<Collider>().bounds.extents.x;
+				hitNormalVec = result.normal;
+				Debug.Log(result.normal);
+				break;
+			}
+			spawnedObj.transform.position = objPos + new Vector3(posOffset.x, 0, posOffset.z);
+
+			Vector3 forwardVec = spawnedObj.transform.forward;
+			Vector3 projectionVec = forwardVec - (Vector3.Dot(forwardVec, hitNormalVec)) * hitNormalVec;
+			spawnedObj.transform.rotation = Quaternion.LookRotation(projectionVec, hitNormalVec);
+		}
+	}
+
 	protected virtual void OnSceneGUI()
 	{
 		Vector3 areaLastPositionOffset = _territoryArea.transform.position - _areaLastPosition;
 
-        for (int i = 0; i < _territoryArea.SpawnedObjects.Count; ++i)
-        {
-            var spawnedObj = _territoryArea.SpawnedObjects[i];
-            Vector3 objPos = spawnedObj.transform.position;
-            RaycastHit[] hitResults = new RaycastHit[10];
-            Physics.RaycastNonAlloc(objPos + new Vector3(0, 10, 0), new Vector3(0, -10, 0), hitResults);
-            Vector3 hitNormalVec = spawnedObj.transform.up;
-            foreach (var result in hitResults)
-            {
-                if (result.collider.gameObject == spawnedObj)
-                    continue;
-                objPos.y = result.point.y + spawnedObj.GetComponent<Collider>().bounds.extents.x;
-                hitNormalVec = result.normal;
-                Debug.Log(result.normal);
-                break;
-            }
-            spawnedObj.transform.position = objPos + new Vector3(areaLastPositionOffset.x, 0, areaLastPositionOffset.z);
+		if(areaLastPositionOffset.magnitude > 0.001f)
+			UpdateSpawnObjectsPos (areaLastPositionOffset);
 
-            Vector3 forwardVec = spawnedObj.transform.forward;
-            Vector3 projectionVec = forwardVec - (Vector3.Dot(forwardVec, hitNormalVec)) * hitNormalVec;
-            spawnedObj.transform.rotation = Quaternion.LookRotation(projectionVec, hitNormalVec);
-        }
+		var areaNodes = _territoryArea.Nodes;
 
-        var areaNodes = _territoryArea.Nodes;
-
-        for (int i = 0; i < areaNodes.Count; ++i)
-        {
-            var node = areaNodes[i];
-            node.position += areaLastPositionOffset;
-        }        
+		for (int i = 0; i < areaNodes.Count; ++i)
+		{
+			var node = areaNodes[i];
+			node.position += areaLastPositionOffset;
+		} 
+             
 
 		Handles.zTest = UnityEngine.Rendering.CompareFunction.Less;
 
