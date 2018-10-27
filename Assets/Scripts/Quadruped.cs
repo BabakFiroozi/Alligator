@@ -8,7 +8,7 @@ public interface IQuadruped
 	float WalkAnimSpeedTweaker{ get; }
 	Transform Trans{ get; }
 	TerritoryArea TerritoryArea{ get; }
-	StateParameters StateParameters{ get; }
+	StateParameters StateParams{ get; }
 }
 
 
@@ -32,8 +32,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public TerritoryArea TerritoryArea{ get { return _territoryArea; } set { _territoryArea = value; } }
 
 	[Space(10)]
-	[SerializeField] StateParameters _stateParameters = null;
-	public StateParameters StateParameters{ get { return _stateParameters; } }
+	[SerializeField] StateParameters _stateParams = null;
+	public StateParameters StateParams{ get { return _stateParams; } }
 
 
 	// Use this for initialization

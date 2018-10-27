@@ -6,10 +6,19 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class StateParameters
 {
-	[Range(1, 100)]
-	public float Wander_Randomness;
 	[Range(.1f, 1)]
 	public float Wander_Speed;
+	[Range(1, 100)]
+	public int Wander_Randomness;
+	[Range(.5f, 20)]
+	public float Wander_Radius;
+
+	public StateParameters()
+	{
+		Wander_Randomness = 10;
+		Wander_Speed = .2f;
+		Wander_Radius = 2;
+	}
 }
 
 public abstract class QuadrupedState
@@ -64,7 +73,6 @@ public class QuadrupedState_Idle : QuadrupedState
 public class QuadrupedState_Wander : QuadrupedState
 {
 	Vector3 _targetPoint;
-	float _radius = 2;
 	float _distance = 10;
 
 	public QuadrupedState_Wander(IQuadruped quadruped) : base(quadruped)
@@ -78,13 +86,13 @@ public class QuadrupedState_Wander : QuadrupedState
 		_quadruped.Animator.SetTrigger ("walk");
 
 		float ang = Random.Range (0, Mathf.PI * 2);
-		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * _radius;
+		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * _quadruped.StateParams.Wander_Radius;
 	}
 
 	public override void OnStateRunFixed ()
 	{
 		var rigidbody = _quadruped.Rigidbody;
-		float maxSpeed = _quadruped.StateParameters.Wander_Speed;
+		float maxSpeed = _quadruped.StateParams.Wander_Speed;
 
 		float needForce = 30 * (maxSpeed * 10);
 
@@ -92,10 +100,10 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		rigidbody.velocity = Vector3.zero;
 
-		float randomness = _quadruped.StateParameters.Wander_Randomness * Time.fixedDeltaTime;
+		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
 		_targetPoint.Normalize ();
-		_targetPoint *= _radius;
+		_targetPoint *=  _quadruped.StateParams.Wander_Radius;
 		Vector3 wanderPos = _quadruped.Trans.position + _quadruped.Trans.forward * _distance + _targetPoint;
 
 		Vector3 wanderDir = (wanderPos - _quadruped.Trans.position).normalized;

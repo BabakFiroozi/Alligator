@@ -438,13 +438,13 @@ Prefab:
       objectReference: {fileID: 510882942}
     - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
         type: 2}
-      propertyPath: _stateParameters.Wander_Randomness
-      value: 35
+      propertyPath: _stateParams.Wander_Speed
+      value: 0.322
       objectReference: {fileID: 0}
     - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
         type: 2}
-      propertyPath: _stateParameters.Wander_Speed
-      value: 0.269
+      propertyPath: _stateParams.Wander_Radius
+      value: 4.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0fbf269544177449d669009770cce3, type: 2}
