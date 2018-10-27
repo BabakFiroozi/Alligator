@@ -3,9 +3,9 @@ using System.Collections;
 
 public abstract class QuadrupedState
 {
-	protected Quadruped _quadruped;
+	protected IQuadruped _quadruped;
 
-	public QuadrupedState(Quadruped qaudruped)
+	public QuadrupedState(IQuadruped qaudruped)
 	{
 		_quadruped = qaudruped;
 	}
@@ -26,7 +26,7 @@ public abstract class QuadrupedState
 /// </summary>
 public class QuadrupedState_Idle : QuadrupedState
 {
-	public QuadrupedState_Idle(Quadruped quadruped) : base(quadruped)
+	public QuadrupedState_Idle(IQuadruped quadruped) : base(quadruped)
 	{
 	}
 
@@ -56,7 +56,7 @@ public class QuadrupedState_Idle : QuadrupedState
 /// </summary>
 public class QuadrupedState_Wander : QuadrupedState
 {
-	public QuadrupedState_Wander(Quadruped quadruped) : base(quadruped)
+	public QuadrupedState_Wander(IQuadruped quadruped) : base(quadruped)
 	{
 	}
 

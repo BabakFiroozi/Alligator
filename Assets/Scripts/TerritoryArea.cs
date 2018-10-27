@@ -5,17 +5,22 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class TerritoryArea : MonoBehaviour, ISerializationCallbackReceiver {
 
-	public GameObject SpawnPrefab;
-
-	[HideInInspector]
-	public List<GameObject> SpawnedObjects = new List<GameObject> ();
-
-	[HideInInspector]
-	public List<TerritoryAreaNode> Nodes = new List<TerritoryAreaNode>();
+	[SerializeField] GameObject _spawnPrefab = null;
+	public GameObject SpawnPrefab{ get { return _spawnPrefab; } }
 
 	[Range(1, 10)]
+	[HideInInspector] 
+	[SerializeField] int _spawnsCount = 1;
+	public int SpawnsCount{ get { return _spawnsCount; } }
+
 	[HideInInspector]
-	public int SpawnsCount = 1;
+	[SerializeField] List<GameObject> _spawnedObjects = new List<GameObject> ();
+	public List<GameObject> SpawnedObjects{ get { return _spawnedObjects; } }
+
+	[HideInInspector]
+	List<TerritoryAreaNode> _nodes = new List<TerritoryAreaNode> ();
+	public List<TerritoryAreaNode> Nodes { get { return _nodes; } }
+
 
 	public void OnAreaChanged() 
 	{

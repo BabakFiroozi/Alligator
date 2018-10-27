@@ -43,8 +43,8 @@ public class TerritoryAreaEditor : Editor {
 
 	void OnEnable()
 	{
-		_spawnsCountProp = serializedObject.FindProperty ("SpawnsCount");
-		_spawnPrefabProp = serializedObject.FindProperty ("SpawnPrefab");
+		_spawnsCountProp = serializedObject.FindProperty ("_spawnsCount");
+		_spawnPrefabProp = serializedObject.FindProperty ("_spawnPrefab");
 
 		_areaLastPosition = _territoryArea.transform.position;
 		_guiStyle = new GUIStyle();

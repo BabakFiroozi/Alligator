@@ -5,7 +5,7 @@ using UnityEngine;
 public class GroundAligner : MonoBehaviour
 {
 
-    Transform _tr;
+	Transform _tr;
     Rigidbody _rigidBody;
     CapsuleCollider _bodyCollider;
     RaycastHit[] _groundHitInfos = new RaycastHit[2]; // Two raycasts, one for back and another for front
@@ -67,12 +67,12 @@ public class GroundAligner : MonoBehaviour
         }
 
 //		//Align solution 1, auto gravity. gliding on surface causes move and smooth rotation, issues on complex surfaces
-//		_rigidBody.rotation = Quaternion.LookRotation(_tr.forward, normalAlignVec);
+		_rigidBody.rotation = Quaternion.LookRotation(_tr.forward, normalAlignVec);
 
 		//Align solution 2, manual gravity. needs to be managed gravity someway
         Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
         Vector3 projectionVec = forwardVec - (Vector3.Dot(forwardVec, normalAlignVec)) * normalAlignVec;
-        _rigidBody.transform.rotation = Quaternion.LookRotation(projectionVec, normalAlignVec);
+//        _rigidBody.transform.rotation = Quaternion.LookRotation(projectionVec, normalAlignVec);
 
     }
 }
