@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ExtendedFlycam.cs" />
      <Compile Include="Assets\Scripts\GroundAligner.cs" />
+     <Compile Include="Assets\Scripts\Interfaces.cs" />
      <Compile Include="Assets\Scripts\LayerMaskUtil.cs" />
      <Compile Include="Assets\Scripts\Quadruped.cs" />
      <Compile Include="Assets\Scripts\QuadrupedStates.cs" />

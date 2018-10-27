@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-
+using Random = UnityEngine.Random;
 
 [CustomEditor(typeof(TerritoryArea), true)]
 [CanEditMultipleObjects]
 public class TerritoryAreaEditor : Editor {
 
 	public const float Border_Draw_Height = 4;
-	const int Init_Nodes_Count = 4;
+	const int Init_Nodes_Count = 6;
 
 	[MenuItem("Game Tools/Create Territory Area")]
 	public static void CreateTerritoryArea()
@@ -25,6 +25,7 @@ public class TerritoryAreaEditor : Editor {
 
 	SerializedProperty _spawnsCountProp;
 	SerializedProperty _spawnPrefabProp;
+	SerializedProperty _spawnedObjects;
 
 	GUIStyle _guiStyle;
 	TerritoryArea _territoryArea;
@@ -45,6 +46,7 @@ public class TerritoryAreaEditor : Editor {
 	{
 		_spawnsCountProp = serializedObject.FindProperty ("_spawnsCount");
 		_spawnPrefabProp = serializedObject.FindProperty ("_spawnPrefab");
+		_spawnedObjects = serializedObject.FindProperty ("_spawnedObjects");
 
 		_areaLastPosition = _territoryArea.transform.position;
 		_guiStyle = new GUIStyle();
@@ -120,11 +122,16 @@ public class TerritoryAreaEditor : Editor {
 		EditorGUILayout.PropertyField (_spawnsCountProp);
 		GUILayout.Space (10);
 		EditorGUILayout.ObjectField (_spawnPrefabProp);
+		//GUILayout.Space (10);
+		//EditorGUILayout.PropertyField (_spawnedObjects);
+
 		GUILayout.Space (10);
 		if (GUILayout.Button ("Spawn Quadruped", GUILayout.Height (30)))
 		{
 			for(int c = 0; c < _territoryArea.SpawnsCount; ++c)
 			{
+				if (_territoryArea.SpawnPrefab == null)
+					break;
 				Vector3 spawnPos = _territoryArea.transform.position;
 				Vector3 spawnUpVec = Vector3.up;
 				var spawnObj = PrefabUtility.InstantiatePrefab (_territoryArea.SpawnPrefab) as GameObject;

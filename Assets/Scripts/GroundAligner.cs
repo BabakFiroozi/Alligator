@@ -46,7 +46,7 @@ public class GroundAligner : MonoBehaviour
         for (int c = 0; c < 2; ++c)
         {
             float vecSign = c == 0 ? -1 : 1;
-            Vector3 origin = (centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) * vecSign);
+            Vector3 origin = (centerWordPos + bodyDir * (_bodyCollider.height * .5f + .04f) * vecSign);
             RaycastHit hitInfo;
             bool hit = Physics.Raycast(origin, new Vector3(0, -1, 0), out hitInfo, ground_check_dist, layerMask);
             if (!hit)
@@ -59,9 +59,9 @@ public class GroundAligner : MonoBehaviour
 
         Vector3 normalAlignVec = Vector3.up;
 
+		// average slope normal
         if (!invalidGround)
         {
-            // average slope normal
             normalAlignVec = _groundHitInfos[0].normal + _groundHitInfos[1].normal;
             normalAlignVec.Normalize();
         }

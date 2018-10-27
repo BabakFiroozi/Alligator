@@ -1,23 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IQuadruped
-{
-	Animator Animator{ get; }
-	Rigidbody Rigidbody{ get; }
-	float WalkAnimSpeedTweaker{ get; }
-	Transform Trans{ get; }
-	TerritoryArea TerritoryArea{ get; }
-	StateParameters StateParams{ get; }
-}
-
 
 [RequireComponent(typeof(GroundAligner))]
 public class Quadruped : MonoBehaviour, IQuadruped
 {
 	const float Move_Force = 20;
 
-	[HideInInspector] [SerializeField] TerritoryArea _territoryArea;
+	[SerializeField] TerritoryArea _territoryArea;
 	[SerializeField] Animator _animator = null;
 	[SerializeField] float _walkAnimSpeedTweaker = 5;
 
@@ -29,7 +19,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public Rigidbody Rigidbody{ get { return _rigidbody; } }
 	public float WalkAnimSpeedTweaker{ get { return _walkAnimSpeedTweaker; } }
 	public Transform Trans{ get { return _tr; } }
-	public TerritoryArea TerritoryArea{ get { return _territoryArea; } set { _territoryArea = value; } }
+	public TerritoryArea TerritoryArea	{ get { return _territoryArea; } set { _territoryArea = value; } }
 
 	[Space(10)]
 	[SerializeField] StateParameters _stateParams = null;
