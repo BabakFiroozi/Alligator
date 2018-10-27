@@ -9,6 +9,7 @@ public interface IQuadruped
 	float WalkAnimSpeedTweaker{ get; }
 	float NeedForce{ get; }
 	Transform Trans{ get; }
+	TerritoryArea TerritoryArea{ get; }
 }
 
 
@@ -17,15 +18,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 {
 	const float Move_Force = 20;
 
-    [HideInInspector]
-	[SerializeField] TerritoryArea _territoryArea;
-	public TerritoryArea TerritoryArea
-	{
-		get { return _territoryArea; }
-		set { _territoryArea = value; } 
-	}
-
-    [SerializeField] Animator _animator = null;
+	[HideInInspector] [SerializeField] TerritoryArea _territoryArea;
+    [SerializeField] Animator _animator;
 	[SerializeField] float _maxSpeed = .1f;
 	[SerializeField] float _walkAnimSpeedTweaker = 5;
 
@@ -40,6 +34,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public float WalkAnimSpeedTweaker{ get { return _walkAnimSpeedTweaker; } }
 	public float NeedForce{ get { return _needForce; } }
 	public Transform Trans{ get { return _tr; } }
+	public TerritoryArea TerritoryArea{ get { return _territoryArea; } set { _territoryArea = value; } }
 
 
 	// Use this for initialization
