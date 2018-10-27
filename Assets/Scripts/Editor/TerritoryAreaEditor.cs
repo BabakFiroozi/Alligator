@@ -14,7 +14,7 @@ public class TerritoryAreaEditor : Editor {
 	public static void CreateTerritoryArea()
 	{
 		var obj = new GameObject ();
-		obj.name = "TerritoryAreya";
+		obj.name = "TerritoryArea";
 		obj.AddComponent<TerritoryArea> ();
 		Vector3 pos = new Vector3 (0, Border_Draw_Height / 2, 0);
 		obj.transform.position = pos;
