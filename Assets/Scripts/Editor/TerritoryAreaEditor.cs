@@ -179,7 +179,6 @@ public class TerritoryAreaEditor : Editor {
 					continue;
 				objPos.y = result.point.y + spawnedObj.GetComponent<Collider>().bounds.extents.x;
 				hitNormalVec = result.normal;
-				Debug.Log(result.normal);
 				break;
 			}
 			spawnedObj.transform.position = objPos + new Vector3(posOffset.x, 0, posOffset.z);

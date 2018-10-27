@@ -21,7 +21,6 @@ public class TerritoryArea : MonoBehaviour, ISerializationCallbackReceiver {
 	List<TerritoryAreaNode> _nodes = new List<TerritoryAreaNode> ();
 	public List<TerritoryAreaNode> Nodes { get { return _nodes; } }
 
-
 	public void OnAreaChanged() 
 	{
 	}
