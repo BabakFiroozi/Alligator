@@ -62,8 +62,9 @@ public class GroundAligner : MonoBehaviour
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
 			if (hit)
 			{
-				if (hitInfo.normal.y < .01f)
-					_rigidBody.AddForce (Vector3.up * _rigidBody.mass * 10);
+				Debug.Log ("Hited...");
+				if (Mathf.Abs (hitInfo.normal.y) < .1f)
+					_rigidBody.AddForce (Vector3.up * _rigidBody.mass * 20);
 			}
 		}
 
