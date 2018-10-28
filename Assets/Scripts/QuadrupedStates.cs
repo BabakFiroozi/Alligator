@@ -107,11 +107,10 @@ public class QuadrupedState_Wander : QuadrupedState
 		{
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
-			Vector3 dir = point - rigbodyPos;
-			if (dir.magnitude < Quadruped.BORDER_STEP && Vector3.Angle (dir, rigbodyDir) < 90)
+			Vector3 toPointDir = point - rigbodyPos;
+			if (toPointDir.magnitude < Quadruped.BORDER_STEP && Vector3.Angle (toPointDir, rigbodyDir) < 90)
 			{
-				Vector3 avgVec = -dir.normalized + new Vector3 (rigbodyDir.x, dir.y, rigbodyDir.z).normalized;
-				avgVec.Normalize ();
+				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
 				_targetPoint += avgVec.normalized * Wander_Distance;
 				break;
 			}
