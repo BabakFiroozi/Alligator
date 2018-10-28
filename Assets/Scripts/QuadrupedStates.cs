@@ -98,9 +98,6 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		float needForce = 30 * (maxSpeed * 10);
 
-		Vector3 vel = rigidbody.velocity;
-		//rigidbody.velocity = Vector3.zero;
-
 		Vector3 rigbodyDir = rigidbody.rotation * Vector3.forward;
 
 		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
@@ -126,7 +123,10 @@ public class QuadrupedState_Wander : QuadrupedState
 			}
 		}
 
-		if(vel.magnitude < maxSpeed)
+		Vector3 bodyVel = rigidbody.velocity;
+//		rigidbody.velocity = Vector3.zero;//Must be deleted
+
+		if(bodyVel.magnitude < maxSpeed)
 		{
 			float force = needForce;
 			Vector3 forceVec = wanderDir * force * Time.fixedDeltaTime;
@@ -139,7 +139,7 @@ public class QuadrupedState_Wander : QuadrupedState
 		}
 		else
 		{
-			rigidbody.velocity = vel.normalized * maxSpeed;
+			rigidbody.velocity = bodyVel.normalized * maxSpeed;
 		}
 
 	}
