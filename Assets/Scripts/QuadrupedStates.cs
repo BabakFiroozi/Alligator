@@ -30,8 +30,6 @@ public abstract class QuadrupedState
 	{
 	}
 
-	public abstract void OnStateRunFixed();
-
 	public abstract void OnStateRun();
 
 	public virtual void OnStateExit()
@@ -49,16 +47,11 @@ public class QuadrupedState_Idle : QuadrupedState
 	public override void OnStateEnter ()
 	{
 		base.OnStateEnter ();
-		_quadruped.Animator.SetTrigger ("idle");
-	}
-
-	public override void OnStateRunFixed ()
-	{
-		_quadruped.Rigidbody.velocity = Vector3.zero;
 	}
 
 	public override void OnStateRun ()
 	{
+		_quadruped.Rigidbody.velocity = Vector3.zero;
 	}
 
 	public override void OnStateExit ()
@@ -83,13 +76,11 @@ public class QuadrupedState_Wander : QuadrupedState
 	{
 		base.OnStateEnter ();
 
-		_quadruped.Animator.SetTrigger ("walk");
-
 		float ang = Random.Range (0, Mathf.PI * 2);
 		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * Wander_Radius;
 	}
 
-	public override void OnStateRunFixed ()
+	public override void OnStateRun ()
 	{
 		var rigidbody = _quadruped.Rigidbody;
 		float maxSpeed = _quadruped.StateParams.Wander_Speed;
@@ -141,12 +132,6 @@ public class QuadrupedState_Wander : QuadrupedState
 			rigidbody.velocity = bodyVel.normalized * maxSpeed;
 		}
 
-	}
-
-	public override void OnStateRun ()
-	{
-		Vector3 vel = _quadruped.Rigidbody.velocity;
-		_quadruped.Animator.SetFloat ("walkSpeedMult", vel.magnitude * _quadruped.WalkAnimSpeedTweaker);
 	}
 
 	public override void OnStateExit ()

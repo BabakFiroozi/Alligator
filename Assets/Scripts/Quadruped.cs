@@ -34,6 +34,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
 
+		_rigidbody.sleepThreshold = .01f;
+
 		_borderPoints.Clear ();
 		var areaNodes = _territoryArea.Nodes;
 		for(int n = 0; n < areaNodes.Count; ++n)
@@ -53,25 +55,24 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 		}
 
-
-		CurrentState = new QuadrupedState_Wander (this);
+		CurrentState = new QuadrupedState_Idle (this);
 	}
 
 	void FixedUpdate()
 	{
-		_currentState.OnStateRunFixed ();
+		_currentState.OnStateRun ();
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		_currentState.OnStateRun ();
-
+		Vector3 vel = _rigidbody.velocity;
+		_animator.SetFloat ("walkSpeedMult", vel.magnitude * _walkAnimSpeedTweaker);
+		_animator.SetFloat ("velocity", vel.magnitude);
 	}
 
 	void LateUpdate()
 	{
-
 		Animator.transform.localRotation = Quaternion.identity;
 		Animator.transform.localPosition = Vector3.zero;
 	}
