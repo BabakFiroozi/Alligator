@@ -55,7 +55,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 		}
 
-		CurrentState = new QuadrupedState_Idle (this);
+		CurrentState = new QuadrupedState_Wander (this);
 	}
 
 	void FixedUpdate()
