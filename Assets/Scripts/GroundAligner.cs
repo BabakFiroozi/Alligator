@@ -39,8 +39,6 @@ public class GroundAligner : MonoBehaviour
         Vector3 bodyDir = _rigidBody.rotation * Vector3.forward;
         Vector3 centerWordPos = _tr.position + _bodyCollider.center;
 
-        bool invalidGround = false;
-
         //Casts 2 rays, back and front both directed to down, then calculates average slope normal
         for (int c = 0; c < 2; ++c)
         {
@@ -49,30 +47,35 @@ public class GroundAligner : MonoBehaviour
             RaycastHit hitInfo;
             bool hit = Physics.Raycast(origin, new Vector3(0, -1, 0), out hitInfo, ground_check_dist, layerMask);
             if (!hit)
-            {
-                invalidGround = true;
                 break;
-            }
             _groundHitInfos[c] = hitInfo;
         }
 
-        Vector3 normalAlignVec = Vector3.up;
 
-		// average slope normal
-        if (!invalidGround)
+		bool isOnGround = _groundHitInfos [0].collider != null && _groundHitInfos [1].collider != null;
+
+		if(isOnGround)
+		{
+			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f);
+			RaycastHit hitInfo;
+			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
+			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
+			if (hit)
+			{
+				if (hitInfo.normal.y < .01f)
+					_rigidBody.position += Vector3.up * .2f;// (Vector3.up * _rigidBody.mass * 10);
+			}
+		}
+
+		Vector3 upwardVector = Vector3.up;
+
+		if (isOnGround)
         {
-            normalAlignVec = _groundHitInfos[0].normal + _groundHitInfos[1].normal;
-            normalAlignVec.Normalize();
+            upwardVector = _groundHitInfos[0].normal + _groundHitInfos[1].normal;
+            upwardVector.Normalize();
         }
 
-//		// solution 1, auto gravity. gliding on surface causes move and smooth rotation, issues on complex surfaces
 		Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
-		_rigidBody.rotation = Quaternion.LookRotation (forwardVec, normalAlignVec);
-
-//		// solution 2, manual gravity. needs to be managed gravity someway
-//        Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
-//        Vector3 projectionVec = forwardVec - (Vector3.Dot(forwardVec, normalAlignVec)) * normalAlignVec;
-//        _rigidBody.transform.rotation = Quaternion.LookRotation(projectionVec, normalAlignVec);
-
+		_rigidBody.rotation = Quaternion.LookRotation (forwardVec, upwardVector);
     }
 }

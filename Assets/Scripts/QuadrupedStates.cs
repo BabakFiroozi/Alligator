@@ -99,7 +99,7 @@ public class QuadrupedState_Wander : QuadrupedState
 		float needForce = 30 * (maxSpeed * 10);
 
 		Vector3 vel = rigidbody.velocity;
-		rigidbody.velocity = Vector3.zero;
+		//rigidbody.velocity = Vector3.zero;
 
 		Vector3 rigbodyDir = rigidbody.rotation * Vector3.forward;
 
@@ -131,13 +131,11 @@ public class QuadrupedState_Wander : QuadrupedState
 			float force = needForce;
 			Vector3 forceVec = wanderDir * force * Time.fixedDeltaTime;
 			rigidbody.AddForce (forceVec, ForceMode.Impulse);
-			float angleStep = Time.fixedDeltaTime * Wander_Radius * 1 +
-				_quadruped.StateParams.Wander_Randomness;
-
-			Vector3 upVec = Vector3.Cross ((rigidbody.rotation * Vector3.left), (rigidbody.rotation * Vector3.forward));
-
-			rigidbody.rotation = Quaternion.RotateTowards (Quaternion.LookRotation (rigbodyDir), 
-				Quaternion.LookRotation (wanderDir, upVec), angleStep);
+			float angleStep = Time.fixedDeltaTime * Wander_Radius * 1.0f +_quadruped.StateParams.Wander_Randomness;
+			Vector3 upwardVec = Vector3.Cross ((rigidbody.rotation * Vector3.left), (rigidbody.rotation * Vector3.forward));
+			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
+			Quaternion toQuat = Quaternion.LookRotation (wanderDir, upwardVec);
+			rigidbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
 		}
 		else
 		{
