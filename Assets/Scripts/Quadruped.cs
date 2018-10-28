@@ -85,7 +85,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			Vector3 upwardVec = Vector3.Cross ((rigbody.rotation * Vector3.left), (rigbody.rotation * Vector3.forward));
 			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
 			Quaternion toQuat = Quaternion.LookRotation (moveDir, upwardVec);
-			float angleStep = Time.fixedDeltaTime * wanderRadius + _stateParams.Wander_Randomness;
+			float angleStep = Time.fixedDeltaTime * (Mathf.PI * 1.5f * Mathf.Rad2Deg);
 			rigbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
 		}
 		else
