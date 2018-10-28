@@ -108,7 +108,7 @@ public class QuadrupedState_Wander : QuadrupedState
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
 			Vector3 toPointDir = point - rigbodyPos;
-			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .5f;
+			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .3f;
 			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 60)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
