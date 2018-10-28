@@ -292,6 +292,16 @@ Prefab:
       propertyPath: _territoryArea
       value: 
       objectReference: {fileID: 1072644284}
+    - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
+        type: 2}
+      propertyPath: _stateParams.Wander_Randomness
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
+        type: 2}
+      propertyPath: _stateParams.Wander_Speed
+      value: 0.388
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0fbf269544177449d669009770cce3, type: 2}
   m_IsPrefabAsset: 0

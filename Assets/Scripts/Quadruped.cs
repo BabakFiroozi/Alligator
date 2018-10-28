@@ -29,6 +29,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public StateParameters StateParams{ get { return _stateParams; } }
 
 	Vector3 _moveDirection;
+	float _moveAngleCoef = 1;
 
 
 	// Use this for initialization
@@ -85,7 +86,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			Vector3 upwardVec = Vector3.Cross ((rigbody.rotation * Vector3.left), (rigbody.rotation * Vector3.forward));
 			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
 			Quaternion toQuat = Quaternion.LookRotation (moveDir, upwardVec);
-			float angleStep = Time.fixedDeltaTime * (Mathf.PI * 1.5f * Mathf.Rad2Deg);
+			float angleStep = Time.fixedDeltaTime * (Mathf.PI * _moveAngleCoef * Mathf.Rad2Deg);
 			rigbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
 		}
 		else
@@ -130,8 +131,9 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			Gizmos.DrawWireSphere(p, .1f);
 	}
 
-	public void SetMoveDirection(Vector3 moveDir)
+	public void SetMoveDirection(Vector3 moveDir, float angCoef = 1)
 	{
 		_moveDirection = moveDir;
+		_moveAngleCoef = angCoef;
 	}
 }

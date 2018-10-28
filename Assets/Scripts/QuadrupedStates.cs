@@ -7,18 +7,18 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class StateParameters
 {
-	[Range(.1f, .5f)]
+	[Range(.2f, .5f)]
 	public float Wander_Speed;
-	[Range(1, 10)]
+	[Range(1, 100)]
 	public int Wander_Randomness;
-	[Range(1, 5)]
+	[Range(5, 10)]
 	public float Wander_Radius = 3;
 
 	public StateParameters()
 	{
-		Wander_Randomness = 5;
 		Wander_Speed = .3f;
-		Wander_Radius = 3;
+		Wander_Randomness = 30;
+		Wander_Radius = 5;
 	}
 }
 
@@ -66,9 +66,6 @@ public class QuadrupedState_Idle : QuadrupedState
 // Wander state
 public class QuadrupedState_Wander : QuadrupedState
 {
-	//Optimal value
-	const float Wander_Distance = 10;
-
 	Vector3 _targetPoint;
 
 	public QuadrupedState_Wander(Quadruped quadruped) : base(quadruped)
@@ -87,6 +84,9 @@ public class QuadrupedState_Wander : QuadrupedState
 	{
 		var rigbody = _quadruped.Rigidbody;
 
+		//optimal value
+		float distance = 5 * (1 + rigbody.velocity.magnitude * 10) - 10;
+
 		Vector3 rigbodyPos = rigbody.position;
 
 		float wanderRadius = _quadruped.StateParams.Wander_Radius;
@@ -97,7 +97,7 @@ public class QuadrupedState_Wander : QuadrupedState
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
 		_targetPoint.Normalize ();
 		_targetPoint *=  wanderRadius;
-		Vector3 wanderPos = rigbodyPos + rigbodyDir * Wander_Distance + _targetPoint;
+		Vector3 wanderPos = rigbodyPos + rigbodyDir * distance + _targetPoint;
 
 		Vector3 wanderDir = (wanderPos - rigbodyPos).normalized;
 
@@ -108,16 +108,17 @@ public class QuadrupedState_Wander : QuadrupedState
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
 			Vector3 toPointDir = point - rigbodyPos;
-			if (toPointDir.magnitude < Quadruped.BORDER_STEP && Vector3.Angle (toPointDir, rigbodyDir) < 60)
+			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .5f;
+			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 60)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
-				_targetPoint += avgVec.normalized * Wander_Distance;
+				_targetPoint += avgVec.normalized * distance;
 				break;
 			}
 		}
 		//
 
-		_quadruped.SetMoveDirection (wanderDir);
+		_quadruped.SetMoveDirection (wanderDir, _quadruped.StateParams.Wander_Radius);
 	}
 
 	public override void OnStateExit ()
