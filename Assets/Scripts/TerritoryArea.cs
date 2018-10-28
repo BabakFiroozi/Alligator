@@ -9,7 +9,7 @@ public class TerritoryArea : MonoBehaviour, ISerializationCallbackReceiver {
 	public GameObject SpawnPrefab{ get { return _spawnPrefab; } }
 
 	[Range(1, 10)]
-	[HideInInspector] //remporary disabled
+	[HideInInspector] //temporary disabled
 	[SerializeField] int _spawnsCount = 1;
 	public int SpawnsCount{ get { return _spawnsCount; } }
 
@@ -17,6 +17,7 @@ public class TerritoryArea : MonoBehaviour, ISerializationCallbackReceiver {
 	public List<GameObject> SpawnedObjects{ get { return _spawnedObjects; } }
 
 	[HideInInspector]
+	[SerializeField]
 	List<TerritoryAreaNode> _nodes = new List<TerritoryAreaNode> ();
 	public List<TerritoryAreaNode> Nodes { get { return _nodes; } }
 

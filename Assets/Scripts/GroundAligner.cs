@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GroundAligner : MonoBehaviour
 {
-
 	Transform _tr;
     Rigidbody _rigidBody;
     CapsuleCollider _bodyCollider;
