@@ -11,11 +11,14 @@ public class StateParameters
 	public float Wander_Speed;
 	[Range(1, 10)]
 	public int Wander_Randomness;
+	[Range(1, 5)]
+	public float Wander_Radius = 3;
 
 	public StateParameters()
 	{
-		Wander_Randomness = 10;
-		Wander_Speed = .2f;
+		Wander_Randomness = 5;
+		Wander_Speed = .3f;
+		Wander_Radius = 3;
 	}
 }
 
@@ -63,9 +66,8 @@ public class QuadrupedState_Idle : QuadrupedState
 // Wander state
 public class QuadrupedState_Wander : QuadrupedState
 {
-	//Optimal values
+	//Optimal value
 	const float Wander_Distance = 10;
-	const float Wander_Radius = 3;
 
 	Vector3 _targetPoint;
 
@@ -78,7 +80,7 @@ public class QuadrupedState_Wander : QuadrupedState
 		base.OnStateEnter ();
 
 		float ang = Random.Range (0, Mathf.PI * 2);
-		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * Wander_Radius;
+		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * _quadruped.StateParams.Wander_Radius;
 	}
 
 	public override void OnStateRun ()
@@ -91,12 +93,14 @@ public class QuadrupedState_Wander : QuadrupedState
 		//Add 30 forces for .1 speed
 		float needForce = 30 * (maxSpeed * 10);
 
+		float wanderRadius = _quadruped.StateParams.Wander_Radius;
+
 		Vector3 rigbodyDir = rigidbody.rotation * Vector3.forward;
 
 		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
 		_targetPoint.Normalize ();
-		_targetPoint *=  Wander_Radius;
+		_targetPoint *=  wanderRadius;
 		Vector3 wanderPos = rigbodyPos + rigbodyDir * Wander_Distance + _targetPoint;
 
 		Vector3 wanderDir = (wanderPos - rigbodyPos).normalized;
@@ -108,7 +112,7 @@ public class QuadrupedState_Wander : QuadrupedState
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
 			Vector3 toPointDir = point - rigbodyPos;
-			if (toPointDir.magnitude < Quadruped.BORDER_STEP && Vector3.Angle (toPointDir, rigbodyDir) < 90)
+			if (toPointDir.magnitude < Quadruped.BORDER_STEP && Vector3.Angle (toPointDir, rigbodyDir) < 60)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
 				_targetPoint += avgVec.normalized * Wander_Distance;
@@ -127,7 +131,7 @@ public class QuadrupedState_Wander : QuadrupedState
 			Vector3 upwardVec = Vector3.Cross ((rigidbody.rotation * Vector3.left), (rigidbody.rotation * Vector3.forward));
 			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
 			Quaternion toQuat = Quaternion.LookRotation (wanderDir, upwardVec);
-			float angleStep = Time.fixedDeltaTime * Wander_Radius + _quadruped.StateParams.Wander_Randomness;
+			float angleStep = Time.fixedDeltaTime * wanderRadius + _quadruped.StateParams.Wander_Randomness;
 			rigidbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
 		}
 		else

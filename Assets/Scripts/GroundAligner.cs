@@ -11,6 +11,9 @@ public class GroundAligner : MonoBehaviour
 
 	[SerializeField] string[] _layerMaskChecks = null;
 
+	bool _frontIsStair;
+	public bool FrontIsStair{ get { return _frontIsStair; } }
+
 
     // Use this for initialization
     void Start()
@@ -52,25 +55,22 @@ public class GroundAligner : MonoBehaviour
         }
 
 
-		bool isOnGround = _groundHitInfos [0].collider != null && _groundHitInfos [1].collider != null;
+		bool groundHit = _groundHitInfos [0].collider != null && _groundHitInfos [1].collider != null;
 
-		if(isOnGround)
+		_frontIsStair = false;
+		if(groundHit)
 		{
-			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
+			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .03f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
-			if (hit)
-			{
-				Debug.Log ("Hited...");
-				if (Mathf.Abs (hitInfo.normal.y) < .1f)
-					_rigidBody.AddForce (Vector3.up * _rigidBody.mass * 20);
-			}
+			if (hit && Mathf.Abs (hitInfo.normal.y) < .1f)
+				_frontIsStair = Mathf.Abs (hitInfo.normal.y) < .1f;
 		}
 
 		Vector3 upwardVector = Vector3.up;
 
-		if (isOnGround)
+		if (groundHit)
         {
             upwardVector = _groundHitInfos[0].normal + _groundHitInfos[1].normal;
             upwardVector.Normalize();
