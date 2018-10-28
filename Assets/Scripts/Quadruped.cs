@@ -22,10 +22,13 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public float WalkAnimSpeedTweaker{ get { return _walkAnimSpeedTweaker; } }
 	public TerritoryArea TerritoryArea	{ get { return _territoryArea; } set { _territoryArea = value; } }
 	public List<Vector3> BorderPoints { get { return _borderPoints; } }
+	public Vector3 MoveDirection{ get { return _moveDirection; } }
 
 	[Space(10)]
 	[SerializeField] StateParameters _stateParams = null;
 	public StateParameters StateParams{ get { return _stateParams; } }
+
+	Vector3 _moveDirection;
 
 
 	// Use this for initialization
@@ -60,6 +63,35 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	void FixedUpdate()
 	{
 		_currentState.OnStateRun ();
+
+		float maxSpeed = _stateParams.Wander_Speed;
+
+		float wanderRadius = _stateParams.Wander_Radius;
+
+		var rigbody = _rigidbody;
+		Vector3 rigbodyPos = rigbody.position;
+		Vector3 rigbodyDir = rigbody.rotation * Vector3.forward;
+
+		Vector3 bodyVel = rigbody.velocity;
+
+		Vector3 moveDir = _moveDirection;
+
+		if(bodyVel.magnitude < maxSpeed)
+		{
+			//Add 30 forces for .1 speed
+			float needForce = 30 * (maxSpeed * 10);
+			Vector3 forceVec = moveDir * needForce * Time.fixedDeltaTime;
+			rigbody.AddForce (forceVec, ForceMode.Impulse);
+			Vector3 upwardVec = Vector3.Cross ((rigbody.rotation * Vector3.left), (rigbody.rotation * Vector3.forward));
+			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
+			Quaternion toQuat = Quaternion.LookRotation (moveDir, upwardVec);
+			float angleStep = Time.fixedDeltaTime * wanderRadius + _stateParams.Wander_Randomness;
+			rigbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
+		}
+		else
+		{
+			rigbody.velocity = bodyVel.normalized * maxSpeed;
+		}
 	}
 	
 	// Update is called once per frame
@@ -96,5 +128,10 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	{
 		foreach(var p in _borderPoints)
 			Gizmos.DrawWireSphere(p, .1f);
+	}
+
+	public void SetMoveDirection(Vector3 moveDir)
+	{
+		_moveDirection = moveDir;
 	}
 }

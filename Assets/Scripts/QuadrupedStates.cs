@@ -85,17 +85,13 @@ public class QuadrupedState_Wander : QuadrupedState
 
 	public override void OnStateRun ()
 	{
-		var rigidbody = _quadruped.Rigidbody;
-		float maxSpeed = _quadruped.StateParams.Wander_Speed;
+		var rigbody = _quadruped.Rigidbody;
 
-		Vector3 rigbodyPos = rigidbody.position;
-
-		//Add 30 forces for .1 speed
-		float needForce = 30 * (maxSpeed * 10);
+		Vector3 rigbodyPos = rigbody.position;
 
 		float wanderRadius = _quadruped.StateParams.Wander_Radius;
 
-		Vector3 rigbodyDir = rigidbody.rotation * Vector3.forward;
+		Vector3 rigbodyDir = rigbody.rotation * Vector3.forward;
 
 		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
@@ -121,24 +117,7 @@ public class QuadrupedState_Wander : QuadrupedState
 		}
 		//
 
-		Vector3 bodyVel = rigidbody.velocity;
-
-		if(bodyVel.magnitude < maxSpeed)
-		{
-			float force = needForce;
-			Vector3 forceVec = wanderDir * force * Time.fixedDeltaTime;
-			rigidbody.AddForce (forceVec, ForceMode.Impulse);
-			Vector3 upwardVec = Vector3.Cross ((rigidbody.rotation * Vector3.left), (rigidbody.rotation * Vector3.forward));
-			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
-			Quaternion toQuat = Quaternion.LookRotation (wanderDir, upwardVec);
-			float angleStep = Time.fixedDeltaTime * wanderRadius + _quadruped.StateParams.Wander_Randomness;
-			rigidbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
-		}
-		else
-		{
-			rigidbody.velocity = bodyVel.normalized * maxSpeed;
-		}
-
+		_quadruped.SetMoveDirection (wanderDir);
 	}
 
 	public override void OnStateExit ()
