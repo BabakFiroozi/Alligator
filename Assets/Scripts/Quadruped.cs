@@ -34,7 +34,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
 
-		_rigidbody.sleepThreshold = .01f;
+		_rigidbody.sleepThreshold = .03f;
 
 		_borderPoints.Clear ();
 		var areaNodes = _territoryArea.Nodes;
