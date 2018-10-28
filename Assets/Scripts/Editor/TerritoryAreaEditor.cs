@@ -135,7 +135,7 @@ public class TerritoryAreaEditor : Editor {
 				Vector3 spawnPos = _territoryArea.transform.position;
 				Vector3 spawnUpVec = Vector3.up;
 				var spawnObj = PrefabUtility.InstantiatePrefab (_territoryArea.SpawnPrefab) as GameObject;
-				spawnObj.name = _territoryArea.SpawnPrefab.name;
+				spawnObj.name = _territoryArea.SpawnPrefab.name + "_" + _territoryArea.SpawnedObjects.Count;
 				spawnObj.transform.position = spawnPos;
 				spawnObj.transform.rotation = Quaternion.Euler (0, UnityEngine.Random.Range (0, 360), 0);
 
