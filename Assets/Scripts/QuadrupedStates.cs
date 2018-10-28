@@ -63,6 +63,7 @@ public class QuadrupedState_Idle : QuadrupedState
 // Wander state
 public class QuadrupedState_Wander : QuadrupedState
 {
+	//Optimal values
 	const float Wander_Distance = 10;
 	const float Wander_Radius = 3;
 
@@ -87,6 +88,7 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		Vector3 rigbodyPos = rigidbody.position;
 
+		//Add 30 forces for .1 speed
 		float needForce = 30 * (maxSpeed * 10);
 
 		Vector3 rigbodyDir = rigidbody.rotation * Vector3.forward;
@@ -99,6 +101,7 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		Vector3 wanderDir = (wanderPos - rigbodyPos).normalized;
 
+		//As long as it's near a border point then steer target point to the some average side direction
 		var _areaPoints = _quadruped.BorderPoints;
 		for(int p = 0; p < _areaPoints.Count; ++p)
 		{
@@ -113,6 +116,7 @@ public class QuadrupedState_Wander : QuadrupedState
 				break;
 			}
 		}
+		//
 
 		Vector3 bodyVel = rigidbody.velocity;
 
@@ -121,7 +125,7 @@ public class QuadrupedState_Wander : QuadrupedState
 			float force = needForce;
 			Vector3 forceVec = wanderDir * force * Time.fixedDeltaTime;
 			rigidbody.AddForce (forceVec, ForceMode.Impulse);
-			float angleStep = Time.fixedDeltaTime * Wander_Radius * 1.0f +_quadruped.StateParams.Wander_Randomness;
+			float angleStep = Time.fixedDeltaTime * Wander_Radius + _quadruped.StateParams.Wander_Randomness;
 			Vector3 upwardVec = Vector3.Cross ((rigidbody.rotation * Vector3.left), (rigidbody.rotation * Vector3.forward));
 			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
 			Quaternion toQuat = Quaternion.LookRotation (wanderDir, upwardVec);

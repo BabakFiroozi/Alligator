@@ -48,7 +48,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			dir.Normalize ();
 
 			float step = BORDER_STEP;
-			for(float d = step; d < dist; d += step)
+			for(float d = 0; d < dist; d += step)
 			{
 				Vector3 point = node1.position + dir * d;
 				_borderPoints.Add (point);
