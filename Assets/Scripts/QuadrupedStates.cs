@@ -124,7 +124,6 @@ public class QuadrupedState_Wander : QuadrupedState
 		}
 
 		Vector3 bodyVel = rigidbody.velocity;
-//		rigidbody.velocity = Vector3.zero;//Must be deleted
 
 		if(bodyVel.magnitude < maxSpeed)
 		{

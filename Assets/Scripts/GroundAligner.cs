@@ -45,7 +45,7 @@ public class GroundAligner : MonoBehaviour
             float vecSign = c == 0 ? -1 : 1;
             Vector3 origin = (centerWordPos + bodyDir * (_bodyCollider.height * .5f + .04f) * vecSign);
             RaycastHit hitInfo;
-            bool hit = Physics.Raycast(origin, new Vector3(0, -1, 0), out hitInfo, ground_check_dist, layerMask);
+			bool hit = Physics.Raycast(origin, Vector3.down, out hitInfo, ground_check_dist, layerMask);
             if (!hit)
                 break;
             _groundHitInfos[c] = hitInfo;
@@ -56,14 +56,14 @@ public class GroundAligner : MonoBehaviour
 
 		if(isOnGround)
 		{
-			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f);
+			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
 			if (hit)
 			{
 				if (hitInfo.normal.y < .01f)
-					_rigidBody.position += Vector3.up * .2f;// (Vector3.up * _rigidBody.mass * 10);
+					_rigidBody.AddForce (Vector3.up * _rigidBody.mass * 10);
 			}
 		}
 
