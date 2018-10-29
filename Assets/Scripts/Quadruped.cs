@@ -11,7 +11,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	[SerializeField] TerritoryArea _territoryArea = null;
 	[SerializeField] float _moveForceCoef = 50;
 	[SerializeField] Animator _animator = null;
-	[SerializeField] float _walkAnimSpeedTweaker = 5;
+	[SerializeField] float _walkAnimSpeedTweaker = 4;
 
 	Transform _tr;
 	Rigidbody _rigidbody;
@@ -119,7 +119,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 			else
 			{
-				if (!frontIsStair && _stairClimbStepCounter == 0)
+				if (!frontIsStair && _stairClimbStepCounter == 0 && _groundAligner.IsOnGround)
 					rigbody.velocity = bodyVel.normalized * maxSpeed;
 			}
 

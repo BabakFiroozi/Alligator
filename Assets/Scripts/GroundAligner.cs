@@ -92,7 +92,7 @@ public class GroundAligner : MonoBehaviour
 				continue;
 			if (hitInfo.collider == _bodyCollider)
 				continue;
-			if(hitInfo.distance > _bodyCollider.radius + .03f)
+			if(hitInfo.distance > _bodyCollider.radius + .02f)
 			{
 //				Debug.Log ("in air");
 				_isOnGround = false;

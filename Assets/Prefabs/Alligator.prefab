@@ -518,14 +518,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369466225679620}
-  m_LocalRotation: {x: 0.0037532998, y: 0.6017966, z: 0.0059866677, w: 0.7986182}
-  m_LocalPosition: {x: -0.9400002, y: 0.43675885, z: -11.720001}
+  m_LocalRotation: {x: -0.0885758, y: 0.71775144, z: -0.14919877, w: 0.6743345}
+  m_LocalPosition: {x: -6.5382204, y: 1.6387726, z: 15.088171}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4203587153151908}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.246, y: 92.39, z: -4.5}
 --- !u!4 &4084442528725886
 Transform:
   m_ObjectHideFlags: 1
@@ -1026,11 +1026,11 @@ MonoBehaviour:
   _territoryArea: {fileID: 0}
   _moveForceCoef: 50
   _animator: {fileID: 95333627954685866}
-  _walkAnimSpeedTweaker: 4.5
+  _walkAnimSpeedTweaker: 3.8
   _stateParams:
-    Wander_Speed: 1
-    Wander_Randomness: 50
-    Wander_Radius: 5
+    Wander_Speed: 3
+    Wander_Randomness: 60
+    Wander_Radius: 4
 --- !u!114 &114710893842262388
 MonoBehaviour:
   m_ObjectHideFlags: 1
