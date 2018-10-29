@@ -52,7 +52,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
 
-		GroundAligner = GetComponent<GroundAligner> ();
+		_groundAligner = GetComponent<GroundAligner> ();
 
 		_moveDirection = _rigidbody.rotation * Vector3.forward;
 
