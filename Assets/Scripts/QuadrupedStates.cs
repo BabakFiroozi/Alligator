@@ -128,9 +128,6 @@ public class QuadrupedState_Wander : QuadrupedState
 		}
 		//
 
-		Debug.Log (_quadruped.Rigidbody.velocity.magnitude);
-
-
 		_quadruped.SetMoveDirection (wanderDir, _quadruped.StateParams.Wander_Radius);
 	}
 
