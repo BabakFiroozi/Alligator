@@ -248,6 +248,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 80.93201, y: -30.000002, z: 0}
+--- !u!1 &229574242 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3,
+    type: 2}
+  m_PrefabInternal: {fileID: 257664985}
+--- !u!1001 &257664985
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.008632794
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0.019743012
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0.9734286
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.039076924
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.22476655
+      objectReference: {fileID: 0}
+    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
+        type: 2}
+      propertyPath: _territoryArea
+      value: 
+      objectReference: {fileID: 1741615610}
+    - target: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_Name
+      value: Alligator_0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,71 +398,15 @@ MonoBehaviour:
   normalMoveSpeed: 10
   slowMoveFactor: 0.25
   fastMoveFactor: 3
---- !u!1001 &1322859531
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 6.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.695132
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -10.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0.01934278
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0.0047476054
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0.110823564
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.99364054
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
-        type: 2}
-      propertyPath: _territoryArea
-      value: 
-      objectReference: {fileID: 1739933403}
-    - target: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_Name
-      value: Alligator_2
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-  m_IsPrefabAsset: 0
---- !u!1 &1322859532 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3,
-    type: 2}
-  m_PrefabInternal: {fileID: 1322859531}
---- !u!1 &1739933402
+--- !u!1 &1741615609
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1739933404}
-  - component: {fileID: 1739933403}
+  - component: {fileID: 1741615611}
+  - component: {fileID: 1741615610}
   m_Layer: 0
   m_Name: Alligator_TerritoryArea
   m_TagString: Untagged
@@ -414,12 +414,12 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1739933403
+--- !u!114 &1741615610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1739933402}
+  m_GameObject: {fileID: 1741615609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76dde40397e7c854eb32549b94d3b764, type: 3}
@@ -429,34 +429,38 @@ MonoBehaviour:
     type: 2}
   _spawnsCount: 1
   _spawnedObjects:
-  - {fileID: 1322859532}
+  - {fileID: 229574242}
   _nodes:
-  - position: {x: 3.7657042, y: 3.58, z: -2.2813768}
-    area: {fileID: 1739933403}
-  - position: {x: 9.787949, y: 3.58, z: -2.1717215}
-    area: {fileID: 1739933403}
-  - position: {x: 13.973709, y: 3.58, z: -5.641491}
-    area: {fileID: 1739933403}
-  - position: {x: 16.397305, y: 3.58, z: -11.0155115}
-    area: {fileID: 1739933403}
-  - position: {x: 13.734236, y: 3.58, z: -15.352473}
-    area: {fileID: 1739933403}
-  - position: {x: 11.784149, y: 3.58, z: -21.722414}
-    area: {fileID: 1739933403}
-  - position: {x: 6.719975, y: 3.58, z: -19.012041}
-    area: {fileID: 1739933403}
-  - position: {x: -3.2351794, y: 3.58, z: -18.273123}
-    area: {fileID: 1739933403}
-  - position: {x: -2.856544, y: 3.58, z: -10.159399}
-    area: {fileID: 1739933403}
---- !u!4 &1739933404
+  - position: {x: -0.096120834, y: 2, z: 8.022972}
+    area: {fileID: 1741615610}
+  - position: {x: 5.323355, y: 2, z: 4.210634}
+    area: {fileID: 1741615610}
+  - position: {x: 6.570661, y: 2, z: 0.64835876}
+    area: {fileID: 1741615610}
+  - position: {x: 4.330127, y: 2, z: -2.5000002}
+    area: {fileID: 1741615610}
+  - position: {x: 3.7001917, y: 2, z: -6.008748}
+    area: {fileID: 1741615610}
+  - position: {x: -0.0000004371139, y: 2, z: -5}
+    area: {fileID: 1741615610}
+  - position: {x: -3.3434186, y: 2, z: -6.881359}
+    area: {fileID: 1741615610}
+  - position: {x: -4.3301272, y: 2, z: -2.4999995}
+    area: {fileID: 1741615610}
+  - position: {x: -11.684723, y: 2, z: 1.3982828}
+    area: {fileID: 1741615610}
+  - position: {x: -14.52883, y: 2, z: 9.535671}
+    area: {fileID: 1741615610}
+  - position: {x: -7.1742077, y: 2, z: 6.6691003}
+    area: {fileID: 1741615610}
+--- !u!4 &1741615611
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1739933402}
+  m_GameObject: {fileID: 1741615609}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.86, y: 3.58, z: -10.56}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -123,7 +123,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			if(frontIsStair)
 			{
 				Debug.Log ("Climbed Stair");
-				_stairClimbStepCounter = 10;
+				_stairClimbStepCounter = 6;
 				_rigidbody.AddForce (Vector3.up * _rigidbody.mass * 60);
 			}
 			else
