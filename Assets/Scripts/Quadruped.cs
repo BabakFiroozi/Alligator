@@ -52,8 +52,6 @@ public class Quadruped : MonoBehaviour, IQuadruped
 
 		_moveDirection = _rigidbody.rotation * Vector3.forward;
 
-		_rigidbody.sleepThreshold = .03f;
-
 		var areaNodes = _territoryArea.Nodes;
 		for(int n = 0; n < areaNodes.Count; ++n)
 		{
