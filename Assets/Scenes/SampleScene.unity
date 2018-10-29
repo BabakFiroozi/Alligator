@@ -351,52 +351,44 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.05
+      value: 6.39
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.193818
+      value: 0.695132
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 1.16
+      value: -10.01
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.029555554
+      value: -0.01934278
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0.0010456952
+      value: -0.0047476054
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalRotation.z
-      value: -0.0088655
+      value: 0.110823564
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.9995233
+      value: 0.99364054
       objectReference: {fileID: 0}
     - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_Name
-      value: Alligator_2
       objectReference: {fileID: 0}
     - target: {fileID: 114488502414202832, guid: 1c0fbf269544177449d669009770cce3,
         type: 2}
       propertyPath: _territoryArea
       value: 
       objectReference: {fileID: 1739933403}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082931015501214, guid: 1c0fbf269544177449d669009770cce3, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+    - target: {fileID: 1369466225679620, guid: 1c0fbf269544177449d669009770cce3, type: 2}
+      propertyPath: m_Name
+      value: Alligator_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1c0fbf269544177449d669009770cce3, type: 2}
@@ -439,23 +431,23 @@ MonoBehaviour:
   _spawnedObjects:
   - {fileID: 1322859532}
   _nodes:
-  - position: {x: -2.6742961, y: 3.58, z: 8.888624}
+  - position: {x: 3.7657042, y: 3.58, z: -2.2813768}
     area: {fileID: 1739933403}
-  - position: {x: 3.34795, y: 3.58, z: 8.99828}
+  - position: {x: 9.787949, y: 3.58, z: -2.1717215}
     area: {fileID: 1739933403}
-  - position: {x: 7.533712, y: 3.58, z: 5.52851}
+  - position: {x: 13.973709, y: 3.58, z: -5.641491}
     area: {fileID: 1739933403}
-  - position: {x: 9.957304, y: 3.58, z: 0.15448952}
+  - position: {x: 16.397305, y: 3.58, z: -11.0155115}
     area: {fileID: 1739933403}
-  - position: {x: 7.2942367, y: 3.58, z: -4.182477}
+  - position: {x: 13.734236, y: 3.58, z: -15.352473}
     area: {fileID: 1739933403}
-  - position: {x: 5.3441496, y: 3.58, z: -10.552416}
+  - position: {x: 11.784149, y: 3.58, z: -21.722414}
     area: {fileID: 1739933403}
-  - position: {x: 0.2799753, y: 3.58, z: -7.842046}
+  - position: {x: 6.719975, y: 3.58, z: -19.012041}
     area: {fileID: 1739933403}
-  - position: {x: -9.675179, y: 3.58, z: -7.1031284}
+  - position: {x: -3.2351794, y: 3.58, z: -18.273123}
     area: {fileID: 1739933403}
-  - position: {x: -9.296543, y: 3.58, z: 1.0106014}
+  - position: {x: -2.856544, y: 3.58, z: -10.159399}
     area: {fileID: 1739933403}
 --- !u!4 &1739933404
 Transform:
@@ -464,7 +456,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1739933402}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58, y: 3.58, z: 0.61}
+  m_LocalPosition: {x: 5.86, y: 3.58, z: -10.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

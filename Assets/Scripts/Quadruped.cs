@@ -23,7 +23,13 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public TerritoryArea TerritoryArea	{ get { return _territoryArea; } set { _territoryArea = value; } }
 	public List<Vector3> BorderPoints { get { return _borderPoints; } }
 	public Vector3 MoveDirection{ get { return _moveDirection; } }
-	public bool StopMovement { get { return _stopMovement; } set { _stopMovement = value; } }
+
+	public bool StopMovement 
+	{
+		get { return _stopMovement; } 
+		set { _stopMovement = value; }
+	}
+
 
 	[Space(10)]
 	[SerializeField] StateParameters _stateParams = null;
@@ -129,7 +135,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		}
 		else
 		{
-			_rigidbody.velocity = Vector3.zero;
+			rigbody.velocity = Vector3.zero;
+			rigbody.Sleep ();
 			rigbody.rotation = Quaternion.LookRotation (_moveDirection, _rigidbody.rotation * Vector3.up);
 		}
 	}

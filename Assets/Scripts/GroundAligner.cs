@@ -5,7 +5,7 @@ using UnityEngine;
 public class GroundAligner : MonoBehaviour
 {
 	Transform _tr;
-    Rigidbody _rigidBody;
+    Rigidbody _rigidbody;
     CapsuleCollider _bodyCollider;
     RaycastHit[] _groundHitInfos = new RaycastHit[2]; // Two raycasts, one for back and another for front
 
@@ -26,7 +26,7 @@ public class GroundAligner : MonoBehaviour
     void Start()
     {
         _tr = transform;
-        _rigidBody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
         _bodyCollider = GetComponent<CapsuleCollider>();
     }
 
@@ -46,7 +46,7 @@ public class GroundAligner : MonoBehaviour
 			layerMask |= LayerMaskUtil.GetLayerMask (maskName);
 		}
 
-        Vector3 bodyDir = _rigidBody.rotation * Vector3.forward;
+        Vector3 bodyDir = _rigidbody.rotation * Vector3.forward;
         Vector3 centerWordPos = _tr.position + _bodyCollider.center;
 
         //Casts 2 rays, back and front both directed to down, then calculates average slope normal
@@ -69,7 +69,7 @@ public class GroundAligner : MonoBehaviour
 		{
 			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .03f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
-			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
+			Vector3 forwardDir = _rigidbody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .2f, layerMask);
 			_frontIsStair = hit && Mathf.Abs (hitInfo.normal.y) < .15f;
 //			Debug.DrawRay (origin, forwardDir * .15f);
@@ -85,7 +85,7 @@ public class GroundAligner : MonoBehaviour
 
 		_isOnGround = true;
 		RaycastHit[] hitInfos = new RaycastHit[2];
-		Physics.RaycastNonAlloc (_rigidBody.position, _rigidBody.rotation * Vector3.down, hitInfos, ground_check_dist);
+		Physics.RaycastNonAlloc (_rigidbody.position, _rigidbody.rotation * Vector3.down, hitInfos, ground_check_dist);
 		foreach(var hitInfo in hitInfos)
 		{
 			if (hitInfo.collider == null)
@@ -101,10 +101,13 @@ public class GroundAligner : MonoBehaviour
 		}
 
 		//set damping on ground an in the air
-		_rigidBody.drag = _isOnGround ? 5 : 0;
-		_rigidBody.angularDrag = _isOnGround ? 5 : 0;
+		_rigidbody.drag = _isOnGround ? 5 : 0;
+		_rigidbody.angularDrag = _isOnGround ? 5 : 0;
 
-		Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
-		_rigidBody.rotation = Quaternion.LookRotation (forwardVec, upwardVector);
+		Vector3 forwardVec = _rigidbody.rotation * Vector3.forward;
+		_rigidbody.rotation = Quaternion.LookRotation (forwardVec, upwardVector);
+
+		//We change only rotation, so we dont need angular velocity
+		_rigidbody.angularVelocity = Vector3.zero;
     }
 }

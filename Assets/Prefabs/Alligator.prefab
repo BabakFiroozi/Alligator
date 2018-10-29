@@ -518,8 +518,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369466225679620}
-  m_LocalRotation: {x: 0.08034577, y: 0.005804589, z: -0.113655955, w: 0.9902491}
-  m_LocalPosition: {x: -10.079994, y: 0.8570731, z: -11.579999}
+  m_LocalRotation: {x: -0.01934278, y: -0.0047476054, z: 0.110823564, w: 0.99364054}
+  m_LocalPosition: {x: 6.39, y: 0.695132, z: -10.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4203587153151908}
@@ -1025,10 +1025,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _territoryArea: {fileID: 0}
   _animator: {fileID: 95333627954685866}
-  _walkAnimSpeedTweaker: 4
+  _walkAnimSpeedTweaker: 4.5
   _stateParams:
     Wander_Speed: 0.3
-    Wander_Randomness: 30
+    Wander_Randomness: 20
     Wander_Radius: 4
 --- !u!114 &114710893842262388
 MonoBehaviour:
