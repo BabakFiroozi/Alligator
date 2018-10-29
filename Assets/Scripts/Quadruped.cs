@@ -119,14 +119,15 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 			else
 			{
-				if (!frontIsStair && _stairClimbStepCounter == 0 && _groundAligner.IsOnGround)
+				if (!frontIsStair && _stairClimbStepCounter == 0 || _groundAligner.IsOnGround)
 					rigbody.velocity = bodyVel.normalized * maxSpeed;
 			}
 
 			if(frontIsStair)
 			{
-				_stairClimbStepCounter = 8;
-				_rigidbody.AddForce (Vector3.up * _rigidbody.mass * 20);
+				_stairClimbStepCounter = 10;
+				Vector3 forcePos = _rigidbody.position + _rigidbody.rotation * Vector3.forward * (_groundAligner.Bodylength - .02f);
+				_rigidbody.AddForceAtPosition (Vector3.up * _rigidbody.mass * 70, forcePos);
 			}
 			else
 			{

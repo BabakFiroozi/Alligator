@@ -15,11 +15,11 @@ public class GroundAligner : MonoBehaviour
 	public bool FrontIsStair{ get { return _frontIsStair; } }
 
 	bool _isOnGround;
+	float _bodylength;
 
-	public bool IsOnGround
-	{
-		get{return _isOnGround;}
-	}
+	public bool IsOnGround	{ get { return _isOnGround; } }
+
+	public float Bodylength	{ get { return _bodylength; } }
 
 
     // Use this for initialization
@@ -28,6 +28,8 @@ public class GroundAligner : MonoBehaviour
         _tr = transform;
         _rigidbody = GetComponent<Rigidbody>();
         _bodyCollider = GetComponent<CapsuleCollider>();
+
+		_bodylength = _bodyCollider.height * .5f;
     }
 
     void FixedUpdate()
@@ -53,7 +55,7 @@ public class GroundAligner : MonoBehaviour
         for (int c = 0; c < 2; ++c)
         {
             float vecSign = c == 0 ? -1 : 1;
-            Vector3 origin = (centerWordPos + bodyDir * (_bodyCollider.height * .5f + .04f) * vecSign);
+			Vector3 origin = (centerWordPos + bodyDir * (_bodylength + .04f) * vecSign);
             RaycastHit hitInfo;
 			bool hit = Physics.Raycast(origin, Vector3.down, out hitInfo, ground_check_dist, layerMask);
             if (!hit)
@@ -67,7 +69,7 @@ public class GroundAligner : MonoBehaviour
 		_frontIsStair = false;
 		if(validGround)
 		{
-			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) + new Vector3 (0, -_bodyCollider.radius * .35f, 0);
+			Vector3 origin = centerWordPos + bodyDir * (_bodylength + .02f) + new Vector3 (0, -_bodyCollider.radius * .35f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidbody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .2f, layerMask);
