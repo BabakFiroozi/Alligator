@@ -126,7 +126,7 @@ public class TerritoryAreaEditor : Editor {
 		GUILayout.EndVertical ();
 
 		GUILayout.BeginVertical ();
-		GUILayout.Space (30);
+		GUILayout.Space (10);
 		EditorGUILayout.PropertyField (_spawnsCountProp);
 		GUILayout.Space (10);
 		EditorGUILayout.ObjectField (_spawnPrefabProp);
@@ -159,7 +159,7 @@ public class TerritoryAreaEditor : Editor {
 		}
 		GUILayout.EndVertical ();
 
-		GUILayout.Space (100);
+		GUILayout.Space (50);
 
 		serializedObject.ApplyModifiedProperties();
 	}
