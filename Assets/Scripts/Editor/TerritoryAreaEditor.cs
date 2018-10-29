@@ -25,7 +25,6 @@ public class TerritoryAreaEditor : Editor {
 
 	SerializedProperty _spawnsCountProp;
 	SerializedProperty _spawnPrefabProp;
-	SerializedProperty _spawnedObjects;
 
 	GUIStyle _guiStyle;
 	TerritoryArea _territoryArea;
@@ -46,18 +45,22 @@ public class TerritoryAreaEditor : Editor {
 	{
 		_spawnsCountProp = serializedObject.FindProperty ("_spawnsCount");
 		_spawnPrefabProp = serializedObject.FindProperty ("_spawnPrefab");
-		_spawnedObjects = serializedObject.FindProperty ("_spawnedObjects");
 
 		_areaLastPosition = _territoryArea.transform.position;
 		_guiStyle = new GUIStyle();
 
+		UpdateSpawnObjectsList ();
+
+		UpdateSpawnObjectsPos (Vector3.zero);
+	}
+
+	void UpdateSpawnObjectsList()
+	{
 		for (int i = 0; i < _territoryArea.SpawnedObjects.Count; ++i) {
 			var spawnedObj = _territoryArea.SpawnedObjects [i];
 			if (!spawnedObj)
 				_territoryArea.SpawnedObjects.Remove (spawnedObj);
 		}
-
-		UpdateSpawnObjectsPos (Vector3.zero);
 	}
 
 	void OnDisable()
@@ -83,8 +86,6 @@ public class TerritoryAreaEditor : Editor {
 			_territoryArea.Nodes.Add (node);
 		}
 		_selectedNode = -1;
-
-		EditorUtility.SetDirty(target);
 	}
 
 	public override void OnInspectorGUI()
@@ -128,6 +129,8 @@ public class TerritoryAreaEditor : Editor {
 		GUILayout.Space (10);
 		if (GUILayout.Button ("Spawn Quadruped", GUILayout.Height (30)))
 		{
+			UpdateSpawnObjectsList ();
+
 			for(int c = 0; c < _territoryArea.SpawnsCount; ++c)
 			{
 				if (_territoryArea.SpawnPrefab == null)
@@ -138,12 +141,13 @@ public class TerritoryAreaEditor : Editor {
 				spawnObj.name = _territoryArea.SpawnPrefab.name + "_" + _territoryArea.SpawnedObjects.Count;
 				spawnObj.transform.position = spawnPos;
 				spawnObj.transform.rotation = Quaternion.Euler (0, UnityEngine.Random.Range (0, 360), 0);
-
 				spawnObj.GetComponent<Quadruped> ().TerritoryArea = _territoryArea;
 				spawnObj.transform.SetSiblingIndex (_territoryArea.transform.GetSiblingIndex ());
 				_territoryArea.SpawnedObjects.Add (spawnObj);
 
 				UpdateSpawnObjectsPos (Vector3.zero);
+
+				Undo.RegisterCreatedObjectUndo (spawnObj, "");
 			}
 		}
 		GUILayout.EndVertical ();
@@ -253,6 +257,7 @@ public class TerritoryAreaEditor : Editor {
 				int insertIndex = i + 1;
                 areaNodes.Insert(insertIndex, newNode);
 				_selectedNode = insertIndex;
+
 				break;
 			}
 
@@ -298,9 +303,8 @@ public class TerritoryAreaEditor : Editor {
 
 		ProcessEvent ();
 
-		Undo.RecordObject(target, _territoryArea.name);
-
-		EditorUtility.SetDirty(target);
+		Undo.RecordObject (target, "");
+		EditorUtility.SetDirty (target);
 
 		_areaLastPosition = _territoryArea.transform.position;
 

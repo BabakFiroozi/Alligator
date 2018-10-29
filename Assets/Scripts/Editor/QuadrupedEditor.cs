@@ -109,5 +109,7 @@ public class QuadrupedEditor : Editor {
 		spawnObj.GetComponent<Quadruped> ().TerritoryArea = territoryArea;
 		spawnObj.transform.SetSiblingIndex (territoryArea.transform.GetSiblingIndex ());
 		territoryArea.SpawnedObjects.Add (spawnObj);
+
+		Undo.RegisterCreatedObjectUndo (spawnObj, "");
 	}
 }
