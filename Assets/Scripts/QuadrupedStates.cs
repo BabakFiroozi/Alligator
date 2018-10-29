@@ -9,9 +9,9 @@ public class StateParameters
 {
 	[Range(.2f, .5f)]
 	public float Wander_Speed;
-	[Range(1, 100)]
+	[Range(1, 50)]
 	public int Wander_Randomness;
-	[Range(5, 10)]
+	[Range(3, 10)]
 	public float Wander_Radius = 3;
 
 	public StateParameters()
@@ -33,7 +33,10 @@ public abstract class QuadrupedState
 	{
 	}
 
-	public abstract void OnStateRun();
+	public virtual void OnStateRun()
+	{
+		
+	}
 
 	public virtual void OnStateExit()
 	{
@@ -50,11 +53,13 @@ public class QuadrupedState_Idle : QuadrupedState
 	public override void OnStateEnter ()
 	{
 		base.OnStateEnter ();
+
+		_quadruped.StopMovement = true;
 	}
 
 	public override void OnStateRun ()
 	{
-		_quadruped.Rigidbody.velocity = Vector3.zero;
+		base.OnStateRun ();
 	}
 
 	public override void OnStateExit ()
@@ -76,12 +81,16 @@ public class QuadrupedState_Wander : QuadrupedState
 	{
 		base.OnStateEnter ();
 
+		_quadruped.StopMovement = false;
+
 		float ang = Random.Range (0, Mathf.PI * 2);
 		_targetPoint = new Vector3 (Mathf.Sin (ang), 0, Mathf.Cos (ang)) * _quadruped.StateParams.Wander_Radius;
 	}
 
 	public override void OnStateRun ()
 	{
+		base.OnStateRun ();
+
 		var rigbody = _quadruped.Rigidbody;
 
 		//optimal value
@@ -108,8 +117,8 @@ public class QuadrupedState_Wander : QuadrupedState
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
 			Vector3 toPointDir = point - rigbodyPos;
-			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .3f;
-			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 60)
+			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .25f;
+			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 75)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
 				_targetPoint += avgVec.normalized * distance;

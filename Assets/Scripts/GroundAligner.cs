@@ -14,6 +14,13 @@ public class GroundAligner : MonoBehaviour
 	bool _frontIsStair;
 	public bool FrontIsStair{ get { return _frontIsStair; } }
 
+	bool _isOnGround;
+
+	public bool IsOnGround
+	{
+		get{return _isOnGround;}
+	}
+
 
     // Use this for initialization
     void Start()
@@ -30,7 +37,7 @@ public class GroundAligner : MonoBehaviour
 
     void AlignOnGround()
     {
-        const float ground_check_dist = 10;
+        const float ground_check_dist = 100;
 
 		int layerMask = LayerMaskUtil.GetLayerMask(0);//Default layer mask
 		foreach (var maskName in _layerMaskChecks) {
@@ -55,10 +62,10 @@ public class GroundAligner : MonoBehaviour
         }
 
 
-		bool groundHit = _groundHitInfos [0].collider != null && _groundHitInfos [1].collider != null;
+		bool validGround = _groundHitInfos [0].collider != null && _groundHitInfos [1].collider != null;
 
 		_frontIsStair = false;
-		if(groundHit)
+		if(validGround)
 		{
 			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .03f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
@@ -67,18 +74,40 @@ public class GroundAligner : MonoBehaviour
 			//Debug.DrawRay (origin, forwardDir * .15f);
 			if (hit)
 			{
-				_frontIsStair = Mathf.Abs (hitInfo.normal.y) < .1f;
+				_frontIsStair = Mathf.Abs (hitInfo.normal.y) < .05f;
 				Debug.Log ("Hit stair");
 			}
 		}
 
 		Vector3 upwardVector = Vector3.up;
 
-		if (groundHit)
+		if (validGround)
         {
             upwardVector = _groundHitInfos[0].normal + _groundHitInfos[1].normal;
             upwardVector.Normalize();
         }
+
+		_isOnGround = true;
+		RaycastHit[] hitInfos = new RaycastHit[2];
+		Physics.RaycastNonAlloc (_rigidBody.position, _rigidBody.rotation * Vector3.down, hitInfos, ground_check_dist);
+		foreach(var hitInfo in hitInfos)
+		{
+			if (hitInfo.collider == null)
+				continue;
+			if (hitInfo.collider == _bodyCollider)
+				continue;
+			if(hitInfo.distance > _bodyCollider.radius + .03f)
+			{
+				Debug.Log ("in air");
+				_isOnGround = false;
+				break;
+			}
+		}
+
+		//set damping on ground an in the air
+		_rigidBody.drag = _isOnGround ? 5 : 0;
+		_rigidBody.angularDrag = _isOnGround ? 5 : 0;
+
 
 		Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
 		_rigidBody.rotation = Quaternion.LookRotation (forwardVec, upwardVector);

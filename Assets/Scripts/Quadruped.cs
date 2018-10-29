@@ -24,12 +24,27 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public List<Vector3> BorderPoints { get { return _borderPoints; } }
 	public Vector3 MoveDirection{ get { return _moveDirection; } }
 
+	public bool StopMovement
+	{
+		get { return _stopMovement; } 
+		set 
+		{
+			_stopMovement = value; 
+			if(value == true)
+			{
+				_rigidbody.Sleep ();
+			}
+		}
+	}
+
 	[Space(10)]
 	[SerializeField] StateParameters _stateParams = null;
 	public StateParameters StateParams{ get { return _stateParams; } }
 
 	Vector3 _moveDirection;
 	float _moveAngleCoef = 1;
+
+	bool _stopMovement;
 
 
 	// Use this for initialization
@@ -60,13 +75,13 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 		}
 
-		StartCoroutine (GoToWalk ());
+		StartCoroutine (GoToWalk (5));
 	}
 
-	IEnumerator GoToWalk()
+	IEnumerator GoToWalk(float t)
 	{
 		CurrentState = new QuadrupedState_Idle (this);
-		yield return new WaitForSeconds (3);
+		yield return new WaitForSeconds (t);
 		CurrentState = new QuadrupedState_Wander (this);
 	}
 
@@ -85,23 +100,32 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		Vector3 bodyVel = rigbody.velocity;
 
 		Vector3 moveDir = _moveDirection;
-
-		if(bodyVel.magnitude < maxSpeed)
+	
+		if (!_stopMovement)
 		{
-			//Add 30 forces for .1 speed
-			float needForce = 30 * (maxSpeed * 10);
-			Vector3 forceVec = moveDir * needForce * Time.fixedDeltaTime;
-			rigbody.AddForce (forceVec, ForceMode.Impulse);
-			Vector3 upwardVec = Vector3.Cross ((rigbody.rotation * Vector3.left), (rigbody.rotation * Vector3.forward));
-			Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
-			Quaternion toQuat = Quaternion.LookRotation (moveDir, upwardVec);
-			float angleStep = Time.fixedDeltaTime * (Mathf.PI * _moveAngleCoef * Mathf.Rad2Deg);
-			rigbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
+			if(bodyVel.magnitude <= maxSpeed)
+			{
+				//Add 30 forces for .1 speed
+				float needForce = 50 * (10 * maxSpeed);
+				Vector3 forceVec = moveDir * needForce * Time.fixedDeltaTime;
+				rigbody.AddForce (forceVec, ForceMode.Impulse);
+
+				Vector3 upwardVec = Vector3.Cross ((rigbody.rotation * Vector3.left), (rigbody.rotation * Vector3.forward));
+				Quaternion fromQuat = Quaternion.LookRotation (rigbodyDir, upwardVec);
+				Quaternion toQuat = Quaternion.LookRotation (moveDir, upwardVec);
+				float angleStep = Time.fixedDeltaTime * (Mathf.PI * _moveAngleCoef * Mathf.Rad2Deg);
+				rigbody.rotation = Quaternion.RotateTowards (fromQuat, toQuat, angleStep);
+			}
+			else
+			{
+				rigbody.velocity = bodyVel.normalized * maxSpeed;
+			}
 		}
 		else
 		{
-			rigbody.velocity = bodyVel.normalized * maxSpeed;
+			
 		}
+
 	}
 	
 	// Update is called once per frame
