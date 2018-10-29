@@ -90,8 +90,6 @@ public class Quadruped : MonoBehaviour, IQuadruped
 
 		float maxSpeed = _stateParams.Wander_Speed;
 
-		float wanderRadius = _stateParams.Wander_Radius;
-
 		var rigbody = _rigidbody;
 		Vector3 rigbodyPos = rigbody.position;
 		Vector3 rigbodyDir = rigbody.rotation * Vector3.forward;
