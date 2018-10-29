@@ -34,6 +34,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 
 	bool _stopMovement;
 
+	int _stairClimbStepCounter = 0;
+
 
 	// Use this for initialization
 	void Start ()
@@ -88,10 +90,12 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		Vector3 bodyVel = rigbody.velocity;
 
 		Vector3 moveDir = _moveDirection;
-	
+
+		bool frontIsStair = GetComponent<GroundAligner> ().FrontIsStair;
+
 		if (!_stopMovement)
 		{
-			if(bodyVel.magnitude <= maxSpeed)
+			if(bodyVel.magnitude < maxSpeed)
 			{
 				//Add 30 forces for .1 speed
 				float needForce = 50 * (10 * maxSpeed);
@@ -106,7 +110,21 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 			else
 			{
-				rigbody.velocity = bodyVel.normalized * maxSpeed;
+				if (!frontIsStair && _stairClimbStepCounter == 0)
+					rigbody.velocity = bodyVel.normalized * maxSpeed;
+			}
+
+			if(frontIsStair)
+			{
+				Debug.Log ("Climbed Stair");
+				_stairClimbStepCounter = 10;
+				_rigidbody.AddForce (Vector3.up * _rigidbody.mass * 60);
+			}
+			else
+			{
+				_stairClimbStepCounter--;
+				if (_stairClimbStepCounter < 0)
+					_stairClimbStepCounter = 0;
 			}
 		}
 		else
@@ -114,9 +132,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			_rigidbody.velocity = Vector3.zero;
 			rigbody.rotation = Quaternion.LookRotation (_moveDirection, _rigidbody.rotation * Vector3.up);
 		}
-
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{

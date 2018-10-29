@@ -70,13 +70,9 @@ public class GroundAligner : MonoBehaviour
 			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .03f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
-			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .1f, layerMask);
-			//Debug.DrawRay (origin, forwardDir * .15f);
-			if (hit)
-			{
-				_frontIsStair = Mathf.Abs (hitInfo.normal.y) < .05f;
-				Debug.Log ("Hit stair");
-			}
+			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .2f, layerMask);
+			_frontIsStair = hit && Mathf.Abs (hitInfo.normal.y) < .15f;
+//			Debug.DrawRay (origin, forwardDir * .15f);
 		}
 
 		Vector3 upwardVector = Vector3.up;
@@ -98,7 +94,7 @@ public class GroundAligner : MonoBehaviour
 				continue;
 			if(hitInfo.distance > _bodyCollider.radius + .03f)
 			{
-				Debug.Log ("in air");
+//				Debug.Log ("in air");
 				_isOnGround = false;
 				break;
 			}
@@ -107,7 +103,6 @@ public class GroundAligner : MonoBehaviour
 		//set damping on ground an in the air
 		_rigidBody.drag = _isOnGround ? 5 : 0;
 		_rigidBody.angularDrag = _isOnGround ? 5 : 0;
-
 
 		Vector3 forwardVec = _rigidBody.rotation * Vector3.forward;
 		_rigidBody.rotation = Quaternion.LookRotation (forwardVec, upwardVector);
