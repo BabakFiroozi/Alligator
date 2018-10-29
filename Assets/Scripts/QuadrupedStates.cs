@@ -102,8 +102,6 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		Vector3 rigbodyDir = rigbody.rotation * Vector3.forward;
 
-		Debug.Log (rigbody.velocity.magnitude);
-
 		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
 		_targetPoint.Normalize ();
