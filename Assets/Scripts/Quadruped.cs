@@ -8,7 +8,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	public const float BORDER_STEP = 1;
 	const float Move_Force = 20;
 
-	[SerializeField] TerritoryArea _territoryArea;
+	[SerializeField] TerritoryArea _territoryArea = null;
 	[SerializeField] Animator _animator = null;
 	[SerializeField] float _walkAnimSpeedTweaker = 5;
 
@@ -38,6 +38,8 @@ public class Quadruped : MonoBehaviour, IQuadruped
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
 
+		_moveDirection = _rigidbody.rotation * Vector3.forward;
+
 		_rigidbody.sleepThreshold = .03f;
 
 		var areaNodes = _territoryArea.Nodes;
@@ -58,6 +60,13 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			}
 		}
 
+		StartCoroutine (GoToWalk ());
+	}
+
+	IEnumerator GoToWalk()
+	{
+		CurrentState = new QuadrupedState_Idle (this);
+		yield return new WaitForSeconds (3);
 		CurrentState = new QuadrupedState_Wander (this);
 	}
 
