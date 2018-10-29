@@ -43,12 +43,16 @@ public class Quadruped : MonoBehaviour, IQuadruped
 
 	int _stairClimbStepCounter = 0;
 
+	GroundAligner _groundAligner;
+
 
 	// Use this for initialization
 	void Start ()
 	{
 		_tr = transform;
 		_rigidbody = GetComponent<Rigidbody> ();
+
+		GroundAligner = GetComponent<GroundAligner> ();
 
 		_moveDirection = _rigidbody.rotation * Vector3.forward;
 
@@ -96,7 +100,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 
 		Vector3 moveDir = _moveDirection;
 
-		bool frontIsStair = GetComponent<GroundAligner> ().FrontIsStair;
+		bool frontIsStair = _groundAligner.FrontIsStair;
 
 		if (!_stopMovement)
 		{
