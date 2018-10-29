@@ -1,0 +1,40 @@
+* Predefined area
+	-Creating: Go to to 'Menu Bar -> Game Tools -> Create Territory Area'
+	-Editing: Select yellow points and move them to edit.
+	-Extending: Click on green point to create new points;
+	-Set Spawn Prefab: Drag the prefab 'Prefabs -> Alligator' to 'Spawn Prefab' property.
+	-Create Alligator: Click the button 'Spawn Quadruped'.
+	-Reset: Click the button 'Reset' to back to the intial shape.
+	-Ceneter: Click the button 'Center' to bring pivot in center.
+	-Full undo redo actions support
+
+* Alligator
+	-Select the alligator in the scene and click the button 'Select Territory Area' to edit its area.
+	-State Params: Tewak paramters toghether to gain a gentle movement.
+		1. Wander_Speed: move speed
+		2. Wander_Randomness: changing direction randomness
+		3. Wander_Radius: circle reference radius
+	
+
+	
+* Other solutions
+	-Editor:
+		1. Creating many game objects attached to parent as area points where adding and removing nodes is time consuming.
+		2. Making collision around the area like this editor. Then change the path when reach the wall with ray casting. 
+		   With more than one ray cast this is not bad solution too.
+	-Agent:
+		1. 
+
+* Expansion
+	-Editor: Creating more agents at once is easy with one click and only needs implementation of finding random points
+			 in area. Can be used for second solution too(collision solution).			 
+	-Agent: New state can be easily added for new behaviour. state only need calculate moving direction and set it to the agent.
+			Grouping behaviours can be easily added.
+
+
+			
+* Potential bugs
+	-Agent may go out of the area at very high speed movement
+	-In very tight and complex situations may have unintentional behaviour or glitch
+
+	

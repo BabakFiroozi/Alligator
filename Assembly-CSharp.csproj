@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\Quadruped.cs" />
      <Compile Include="Assets\Scripts\QuadrupedStates.cs" />
      <Compile Include="Assets\Scripts\TerritoryArea.cs" />
+     <None Include="Assets\Tasks-Quastions.txt" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>H:/AlligatorWandering/AlligatorWandering/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
