@@ -67,7 +67,7 @@ public class GroundAligner : MonoBehaviour
 		_frontIsStair = false;
 		if(validGround)
 		{
-			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) + new Vector3 (0, -_bodyCollider.radius * .25f, 0);
+			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .02f) + new Vector3 (0, -_bodyCollider.radius * .35f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidbody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .2f, layerMask);

@@ -7,17 +7,17 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class StateParameters
 {
-	[Range(.5f, 1.5f)]
+	[Range(.5f, 3.0f)]
 	public float Wander_Speed;
-	[Range(1, 50)]
+	[Range(1, 100)]
 	public int Wander_Randomness;
-	[Range(3, 10)]
-	public float Wander_Radius = 3;
+	[Range(2, 8)]
+	public float Wander_Radius;
 
 	public StateParameters()
 	{
-		Wander_Speed = .3f;
-		Wander_Randomness = 30;
+		Wander_Speed = 1;
+		Wander_Randomness = 50;
 		Wander_Radius = 5;
 	}
 }
@@ -102,13 +102,12 @@ public class QuadrupedState_Wander : QuadrupedState
 
 		Vector3 rigbodyDir = rigbody.rotation * Vector3.forward;
 
+		Debug.Log (rigbody.velocity.magnitude);
+
 		float randomness = _quadruped.StateParams.Wander_Randomness * Time.fixedDeltaTime;
 		_targetPoint += new Vector3 (Random.Range (-1f, 1f) * randomness, 0, Random.Range (-1f, 1f) * randomness);
 		_targetPoint.Normalize ();
 		_targetPoint *=  wanderRadius;
-		Vector3 wanderPos = rigbodyPos + rigbodyDir * distance + _targetPoint;
-
-		Vector3 wanderDir = (wanderPos - rigbodyPos).normalized;
 
 		//As long as it's near a border point then steer target point to the some average side direction
 		var _areaPoints = _quadruped.BorderPoints;
@@ -116,17 +115,22 @@ public class QuadrupedState_Wander : QuadrupedState
 		{
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
-			Vector3 toPointDir = point - rigbodyPos;
 			Vector3 vel = rigbody.velocity; vel.y = 0;
-			float speedAdaptlimit = Quadruped.BORDER_STEP + vel.magnitude * .5f;
-			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 75)
+			Vector3 toPointDir = point - rigbodyPos; toPointDir.y = 0;
+			float diffAngle = Vector3.Angle (toPointDir, new Vector3 (rigbodyDir.x, 0, rigbodyDir.z));
+			if (toPointDir.magnitude < Quadruped.BORDER_STEP + vel.magnitude * .5f && diffAngle < 75)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
 				_targetPoint += avgVec.normalized * distance;
+				wanderRadius += distance;
 				break;
 			}
 		}
 		//
+
+		Vector3 wanderPos = rigbodyPos + rigbodyDir * distance + _targetPoint;
+
+		Vector3 wanderDir = (wanderPos - rigbodyPos).normalized;
 
 		_quadruped.SetMoveDirection (wanderDir, _quadruped.StateParams.Wander_Radius);
 	}

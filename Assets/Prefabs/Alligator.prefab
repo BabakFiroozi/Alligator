@@ -1028,9 +1028,9 @@ MonoBehaviour:
   _animator: {fileID: 95333627954685866}
   _walkAnimSpeedTweaker: 4.5
   _stateParams:
-    Wander_Speed: 0.6
-    Wander_Randomness: 30
-    Wander_Radius: 4
+    Wander_Speed: 1
+    Wander_Randomness: 50
+    Wander_Radius: 5
 --- !u!114 &114710893842262388
 MonoBehaviour:
   m_ObjectHideFlags: 1
