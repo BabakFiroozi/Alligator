@@ -64,8 +64,12 @@ public class GroundAligner : MonoBehaviour
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
 			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
-			if (hit && Mathf.Abs (hitInfo.normal.y) < .1f)
+			//Debug.DrawRay (origin, forwardDir * .15f);
+			if (hit)
+			{
 				_frontIsStair = Mathf.Abs (hitInfo.normal.y) < .1f;
+				Debug.Log ("Hit stair");
+			}
 		}
 
 		Vector3 upwardVector = Vector3.up;
