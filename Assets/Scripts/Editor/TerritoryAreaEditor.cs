@@ -325,9 +325,6 @@ public class TerritoryAreaEditor : Editor {
 				curEvent.commandName = "";
 				curEvent.Use();
 			}
-			if (curEvent.commandName == "Delete")
-			{
-			}
 		}
 
 		if(curEvent.type == EventType.KeyDown)
