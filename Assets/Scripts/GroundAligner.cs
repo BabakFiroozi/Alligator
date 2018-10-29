@@ -70,7 +70,7 @@ public class GroundAligner : MonoBehaviour
 			Vector3 origin = centerWordPos + bodyDir * (_bodyCollider.height * .5f + .03f) + new Vector3 (0, -_bodyCollider.radius * .3f, 0);
 			RaycastHit hitInfo;
 			Vector3 forwardDir = _rigidBody.rotation * Vector3.forward;
-			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .15f, layerMask);
+			bool hit = Physics.Raycast(origin, forwardDir, out hitInfo, .1f, layerMask);
 			//Debug.DrawRay (origin, forwardDir * .15f);
 			if (hit)
 			{

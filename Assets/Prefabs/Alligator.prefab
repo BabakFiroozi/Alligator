@@ -1027,7 +1027,7 @@ MonoBehaviour:
   _animator: {fileID: 95333627954685866}
   _walkAnimSpeedTweaker: 4
   _stateParams:
-    Wander_Speed: 0.35
+    Wander_Speed: 0.3
     Wander_Randomness: 30
     Wander_Radius: 4
 --- !u!114 &114710893842262388
