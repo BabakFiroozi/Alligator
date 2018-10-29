@@ -19,16 +19,18 @@
 	
 * Other solutions
 	-Editor:
-		1. Creating many game objects attached to parent as area points where adding and removing nodes is time consuming.
+		1. Creating many game objects attached to parent as area points where adding and removing nodes is time consuming but
+		   it is simple.
 		2. Making collision around the area like this editor. Then change the path when reach the wall with ray casting. 
 		   With more than one ray cast this is not bad solution too.
 	-Agent:
-		1. 
+		1. We can randomly put a point on ground to reach there and put again but after some movements it becoms a repetitive
+		   chain of movements. it is simple and is not a very bad solution.
 
 * Expansion
 	-Editor: Creating more agents at once is easy with one click and only needs implementation of finding random points
 			 in area. Can be used for second solution too(collision solution).			 
-	-Agent: New state can be easily added for new behaviour. state only need calculate moving direction and set it to the agent.
+	-Agent: New state can be easily added for new behaviour. state only need calculate movement direction and set it to the agent.
 			Grouping behaviours can be easily added.
 
 
