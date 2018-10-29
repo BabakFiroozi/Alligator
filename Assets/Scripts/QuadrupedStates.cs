@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public class StateParameters
 {
-	[Range(.2f, .5f)]
+	[Range(.5f, 1.5f)]
 	public float Wander_Speed;
 	[Range(1, 50)]
 	public int Wander_Randomness;
@@ -117,7 +117,8 @@ public class QuadrupedState_Wander : QuadrupedState
 			var point = _areaPoints [p];
 			point.y = rigbodyPos.y;
 			Vector3 toPointDir = point - rigbodyPos;
-			float speedAdaptlimit = Quadruped.BORDER_STEP + rigbody.velocity.magnitude * .25f;
+			Vector3 vel = rigbody.velocity; vel.y = 0;
+			float speedAdaptlimit = Quadruped.BORDER_STEP + vel.magnitude * .5f;
 			if (toPointDir.magnitude < speedAdaptlimit && Vector3.Angle (toPointDir, rigbodyDir) < 75)
 			{
 				Vector3 avgVec = -toPointDir.normalized + new Vector3 (rigbodyDir.x, toPointDir.y, rigbodyDir.z).normalized;
@@ -126,6 +127,9 @@ public class QuadrupedState_Wander : QuadrupedState
 			}
 		}
 		//
+
+		Debug.Log (_quadruped.Rigidbody.velocity.magnitude);
+
 
 		_quadruped.SetMoveDirection (wanderDir, _quadruped.StateParams.Wander_Radius);
 	}

@@ -107,7 +107,14 @@ public class TerritoryAreaEditor : Editor {
 			Vector3 offsetVec = centerPos - _territoryArea.transform.position;
 			for (int i = 0; i < nodesList.Count; ++i)
 				nodesList [i].position -= offsetVec;
+
+			for (int i = 0; i < _territoryArea.SpawnedObjects.Count; ++i)
+				_territoryArea.SpawnedObjects [i].transform.position -= offsetVec;
+			
 			_territoryArea.transform.position += offsetVec;
+
+			UpdateSpawnObjectsPos (Vector3.zero);
+
 		}
 		GUILayout.Space (30);
 		if( GUILayout.Button("Reset", GUILayout.Width(60), GUILayout.Height(30)))

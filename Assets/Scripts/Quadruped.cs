@@ -9,6 +9,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 	const float Move_Force = 20;
 
 	[SerializeField] TerritoryArea _territoryArea = null;
+	[SerializeField] float _moveForceCoef = 50;
 	[SerializeField] Animator _animator = null;
 	[SerializeField] float _walkAnimSpeedTweaker = 5;
 
@@ -104,7 +105,7 @@ public class Quadruped : MonoBehaviour, IQuadruped
 			if(bodyVel.magnitude < maxSpeed)
 			{
 				//Add 30 forces for .1 speed
-				float needForce = 50 * (10 * maxSpeed);
+				float needForce = _moveForceCoef * (10 * maxSpeed);
 				Vector3 forceVec = moveDir * needForce * Time.fixedDeltaTime;
 				rigbody.AddForce (forceVec, ForceMode.Impulse);
 

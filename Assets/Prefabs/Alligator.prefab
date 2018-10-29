@@ -518,8 +518,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369466225679620}
-  m_LocalRotation: {x: -0.01934278, y: -0.0047476054, z: 0.110823564, w: 0.99364054}
-  m_LocalPosition: {x: 6.39, y: 0.695132, z: -10.01}
+  m_LocalRotation: {x: 0.0037532998, y: 0.6017966, z: 0.0059866677, w: 0.7986182}
+  m_LocalPosition: {x: -0.9400002, y: 0.43675885, z: -11.720001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4203587153151908}
@@ -986,7 +986,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1369466225679620}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -1024,11 +1024,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _territoryArea: {fileID: 0}
+  _moveForceCoef: 50
   _animator: {fileID: 95333627954685866}
   _walkAnimSpeedTweaker: 4.5
   _stateParams:
-    Wander_Speed: 0.3
-    Wander_Randomness: 20
+    Wander_Speed: 0.6
+    Wander_Randomness: 30
     Wander_Radius: 4
 --- !u!114 &114710893842262388
 MonoBehaviour:
